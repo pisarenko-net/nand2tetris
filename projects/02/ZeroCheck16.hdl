@@ -1,0 +1,32 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/And16.hdl
+
+/**
+ * 0, if any bit is set to "1"
+ * 1, otherwise
+ */
+
+CHIP ZeroCheck16 {
+    IN a[16];
+    OUT out;
+
+    PARTS:
+    Or(a=a[0], b=a[1], out=or01);
+    Or(a=or01, b=a[2], out=or02);
+    Or(a=or02, b=a[3], out=or03);
+    Or(a=or03, b=a[4], out=or04);
+    Or(a=or04, b=a[5], out=or05);
+    Or(a=or05, b=a[6], out=or06);
+    Or(a=or06, b=a[7], out=or07);
+    Or(a=or07, b=a[8], out=or08);
+    Or(a=or08, b=a[9], out=or09);
+    Or(a=or09, b=a[10], out=or10);
+    Or(a=or10, b=a[11], out=or11);
+    Or(a=or11, b=a[12], out=or12);
+    Or(a=or12, b=a[13], out=or13);
+    Or(a=or13, b=a[14], out=or14);
+    Or(a=or14, b=a[15], out=orout);
+    Not(in=orout, out=out);
+}

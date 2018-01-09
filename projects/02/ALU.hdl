@@ -55,5 +55,8 @@ CHIP ALU {
     Mux16(a=andnxny, b=addnxny, sel=f, out=outf);
 
     Not16(in=outf, out=notoutf);
-    Mux16(a=outf, b=notoutf, sel=no, out=out);
+    Mux16(a=outf, b=notoutf, sel=no, out=out, out=outpins, out[15]=outfirst);
+
+    ZeroCheck16(a=outpins, out=zr);
+    And(a=outfirst, b=true, out=ng);
 }
