@@ -39,5 +39,35 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    // Put your code here:
+
+    Mux16(a=instruction, b=aluout, sel=instruction[15], out=muxareg);
+
+    ARegister(in=muxareg, load=instruction[5], out=outareg, out[0..14]=addressM);
+
+    Mux16(a=outareg, b=inM, sel=instruction[12], out=muxam);
+
+    DRegister(in=aluout, load=instruction[4], out=outdreg);
+
+    ALU(x=outdreg, y=muxam, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=outM, out=aluout, zr=zr, ng=ng);
+
+    // write to M? -> when the destination M bit is set and C instruction
+    And(a=instruction[15], b=instruction[3], out=writeM);
+
+    // j1 is set, ng is 1
+    And(a=ng, b=instruction[2], out=j1);
+    // j2 is set, zr is 1
+    And(a=zr, b=instruction[1], out=j2);
+    // j3 is set, ng is 0
+    Not(in=ng, out=ps);
+    And(a=ps, b=instruction[0], out=j3);
+
+    // determine, if we should jump: when jX is met and we're on C instruction
+    Or(a=j1, b=j2, out=j12);
+    Or(a=j12, b=j3, out=j123);
+    And(a=instruction[15], b=j123, out=jump);
+
+    // determine, if we should increment
+    Not(in=jump, out=inc);
+
+    PC(in=outareg, load=jump, inc=inc, reset=reset, out[0..14]=pc);
 }
