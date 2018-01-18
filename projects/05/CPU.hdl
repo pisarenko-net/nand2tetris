@@ -67,8 +67,10 @@ CHIP CPU {
     // j2 is set, zr is 1
     And(a=zr, b=instruction[1], out=j2);
     // j3 is set, ng is 0
-    Not(in=ng, out=ps);
-    And(a=ps, b=instruction[0], out=j3);
+    Not(in=ng, out=notng);
+    Not(in=zr, out=notzr);
+    And(a=notng, b=instruction[0], out=andpsc);
+    And(a=notzr, b=andpsc, out=j3);
 
     // determine, if we should jump: when jX is met and we're on C instruction
     Or(a=j1, b=j2, out=j12);
