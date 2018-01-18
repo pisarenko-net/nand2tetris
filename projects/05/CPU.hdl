@@ -42,11 +42,20 @@ CHIP CPU {
 
     Mux16(a=instruction, b=aluout, sel=instruction[15], out=muxareg);
 
-    ARegister(in=muxareg, load=instruction[5], out=outareg, out[0..14]=addressM);
+    // load A register either when:
+    //  - C instruction and bit 5 is set
+    //  - A instruction
+    And(a=instruction[15], b=true, out=cinstr);
+    Not(in=cinstr, out=ainstr);
+    Or(a=instruction[5], b=ainstr, out=loadareg);
+
+    ARegister(in=muxareg, load=loadareg, out=outareg, out[0..14]=addressM);
 
     Mux16(a=outareg, b=inM, sel=instruction[12], out=muxam);
 
-    DRegister(in=aluout, load=instruction[4], out=outdreg);
+    And(a=instruction[4], b=cinstr, out=loaddreg);
+
+    DRegister(in=aluout, load=loaddreg, out=outdreg);
 
     ALU(x=outdreg, y=muxam, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=outM, out=aluout, zr=zr, ng=ng);
 
