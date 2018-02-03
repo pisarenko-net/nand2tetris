@@ -45,48 +45,48 @@ D;{comparison_type}
 @SP
 A=M
 A=A-1
-M=-1
+M=0
 @END_{comparison_type}_{counter}
 0;JMP
 (IF_{comparison_type}_{counter})
 @SP
 A=M
 A=A-1
-M=0
+M=-1
 (END_{comparison_type}_{counter})
 '''
 
-def _add(command_number):
+def _add(*args):
 	return BINARY_COMMAND_TEMPLATE.format(command_name='add', computation='A+D')
 
 
-def _sub(command_number):
+def _sub(*args):
 	return BINARY_COMMAND_TEMPLATE.format(command_name='sub', computation='A-D')
 
 
-def _neg(command_number):
+def _neg(*args):
 	return UNARY_COMMAND_TEMPLATE.format(command_name='neg', computation='-A')
 
 
-def _eq(command_number):
+def _eq(class_name, command_number):
 	return COMPARISON_COMMAND_TEMPLATE.format(command_name='eq', comparison_type='JEQ', counter=command_number)
 
 
-def _gt(command_number):
+def _gt(class_name, command_number):
 	return COMPARISON_COMMAND_TEMPLATE.format(command_name='gt', comparison_type='JGT', counter=command_number)
 
 
-def _lt(command_number):
+def _lt(class_name, command_number):
 	return COMPARISON_COMMAND_TEMPLATE.format(command_name='lt', comparison_type='JLT', counter=command_number)
 
 
-def _and(command_number):
+def _and(*args):
 	return BINARY_COMMAND_TEMPLATE.format(command_name='and', computation='D&A')
 
 
-def _or(command_number):
+def _or(*args):
 	return BINARY_COMMAND_TEMPLATE.format(command_name='or', computation='A|D')
 
 
-def _not(command_number):
+def _not(*args):
 	return UNARY_COMMAND_TEMPLATE.format(command_name='not', computation='!A')

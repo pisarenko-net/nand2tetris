@@ -1,7 +1,7 @@
+import os
 import re
 import sys
 
-from VMPush import push as _push
 from VMArithmeticCommands import _add
 from VMArithmeticCommands import _sub
 from VMArithmeticCommands import _neg
@@ -11,12 +11,15 @@ from VMArithmeticCommands import _lt
 from VMArithmeticCommands import _and
 from VMArithmeticCommands import _or
 from VMArithmeticCommands import _not
+from VMPush import pop as _pop
+from VMPush import push as _push
 
 
 COMMENT_REGEX = re.compile(r'(//.*)')
 
 VM_COMMANDS = {
 	'push': _push,
+	'pop':  _pop,
 	'add':  _add,
 	'sub':  _sub,
 	'neg':  _neg,
@@ -28,12 +31,19 @@ VM_COMMANDS = {
 	'not':  _not
 }
 
+PROGRAM_END = '''// program end loop
+(VERY_END)
+@VERY_END
+0;JMP
+'''
+
 
 def main(input_path):
 	with open(input_path) as f:
 		vm_source_code = f.readlines()
 
 	command_counter = 0
+	class_name = _parse_class_name(input_path)
 
 	with open(_create_output_path(input_path), 'w') as f:
 		for line in vm_source_code:
@@ -43,9 +53,15 @@ def main(input_path):
 			line_tokens = clean_line.split(' ')
 			vm_command = line_tokens[0]
 			vm_command_arguments = line_tokens[1:]
-			print(VM_COMMANDS[vm_command](command_counter, *vm_command_arguments))
-			f.write(VM_COMMANDS[vm_command](command_counter, *vm_command_arguments))
+			f.write(VM_COMMANDS[vm_command](class_name, command_counter, *vm_command_arguments))
 			command_counter += 1
+		f.write(PROGRAM_END)
+
+
+def _parse_class_name(input_path):
+	filename_w_ext = os.path.basename(input_path)
+	filename, _ = os.path.splitext(filename_w_ext)
+	return filename
 
 
 def _create_output_path(input_path):
