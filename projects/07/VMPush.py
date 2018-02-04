@@ -9,7 +9,7 @@ TEMP_BASE_ADDRESS = 5
 
 ADDRESS_TEMPLATE = '@{address}\n'
 
-PUSH_COMMENT = '// push {memory_segment_name} {value}\n'
+COMMENT_TEMPLATE = '// {command} {memory_segment_name} {value}\n'
 
 WRITE_AND_INCREMENT_SP = '''@SP
 A=M
@@ -17,20 +17,6 @@ M=D
 @SP
 M=M+1
 '''
-
-PUSH_CONSTANT_TEMPLATE = 'D=A\n'
-
-PUSH_STATIC_TEMPLATE = '''A=M
-D=A
-'''
-
-PUSH_START_TEMPLATE = 'A=M\n'
-
-PUSH_END_TEMPLATE = '''A=M
-D=A
-'''
-
-POP_COMMENT = '// pop {memory_segment_name} {address_offset}\n'
 
 READ_AND_DECREMENT_SP = '''@SP
 M=M-1
@@ -40,35 +26,33 @@ A=M
 D=A
 '''
 
-POP_STATIC_TEMPLATE = 'M=D\n'
+COPY_FROM_A_TO_D = 'D=A\n'
 
-POP_START_TEMPLATE = 'A=M\n'
+WRITE_TO_MEMORY_FROM_REGISTER = 'M=D\n'
 
-POP_POINTER_START_TEMPLATE = 'M=D\n'
-
-POP_END_TEMPLATE = 'M=D\n'
+READ_MEMORY_TO_REGISTER = 'A=M\n'
 
 
 def push(class_name, command_number, memory_segment, value):
 	address_offset = int(value)
 
-	output = PUSH_COMMENT.format(memory_segment_name=memory_segment, value=value)
+	output = COMMENT_TEMPLATE.format(command='push', memory_segment_name=memory_segment, value=value)
 	output += ADDRESS_TEMPLATE.format(address=_get_base_address(class_name, memory_segment, address_offset))
 
 	if memory_segment == 'constant':
-		output += PUSH_CONSTANT_TEMPLATE
+		output += COPY_FROM_A_TO_D
 	elif memory_segment == 'static':
-		output += PUSH_STATIC_TEMPLATE
+		output += READ_MEMORY_TO_REGISTER
+		output += COPY_FROM_A_TO_D
 	else:
-		if memory_segment == 'temp' or memory_segment == 'pointer':
-			pass
-		else:
-			output += PUSH_START_TEMPLATE
+		if memory_segment in MEMORY_SEGMENT_ADDRESSES:
+			output += READ_MEMORY_TO_REGISTER
 
 		if address_offset != 0:
 			output += _increment_memory(address_offset)
 
-		output += PUSH_END_TEMPLATE
+		output += READ_MEMORY_TO_REGISTER
+		output += COPY_FROM_A_TO_D
 
 	output += WRITE_AND_INCREMENT_SP
 	return output
@@ -77,24 +61,22 @@ def push(class_name, command_number, memory_segment, value):
 def pop(class_name, command_number, memory_segment, value):
 	address_offset = int(value)
 
-	output = POP_COMMENT.format(memory_segment_name=memory_segment, address_offset=address_offset)
+	output = COMMENT.format(command='pop', memory_segment_name=memory_segment, value=address_offset)
 	output += READ_AND_DECREMENT_SP
 	output += ADDRESS_TEMPLATE.format(address=_get_base_address(class_name, memory_segment, address_offset))
 
 	if memory_segment == 'static':
-		output += POP_STATIC_TEMPLATE
+		output += WRITE_TO_MEMORY_FROM_REGISTER
 	else:
-		if memory_segment == 'temp':
-			pass
-		elif memory_segment == 'pointer':
-			output += POP_POINTER_START_TEMPLATE
-		else:
-			output += POP_START_TEMPLATE
+		if memory_segment == 'pointer':
+			output += WRITE_TO_MEMORY_FROM_REGISTER
+		elif memory_segment in MEMORY_SEGMENT_ADDRESSES:
+			output += READ_MEMORY_TO_REGISTER
 
 		if address_offset != 0:
 			output += _increment_memory(address_offset)
 
-		output += POP_END_TEMPLATE
+		output += WRITE_TO_MEMORY_FROM_REGISTER
 	return output
 
 
@@ -108,7 +90,7 @@ def _get_base_address(class_name, memory_segment, address_offset):
 	elif memory_segment == 'constant':
 		return address_offset
 	elif memory_segment == 'static':
-		return '{class_name}.{address_reference}'.format(class_name=class_name, address_reference=value)
+		return '{class_name}.{address_reference}'.format(class_name=class_name, address_reference=address_offset)
 	elif memory_segment == 'pointer':
 		return _compute_pointer_address(address_offset)
 	else:
