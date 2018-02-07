@@ -14,6 +14,8 @@ from VMArithmeticCommands import _not
 from VMBranch import goto as _goto
 from VMBranch import if_goto as _if_goto
 from VMBranch import label as _label
+from VMFunction import call as _call
+from VMFunction import function as _function
 from VMPush import pop as _pop
 from VMPush import push as _push
 
@@ -38,14 +40,11 @@ VM_COMMANDS = {
 
 	'label': _label,
 	'if-goto': _if_goto,
-	'goto': _goto
-}
+	'goto': _goto,
 
-PROGRAM_END = '''// program end loop
-(VERY_END)
-@VERY_END
-0;JMP
-'''
+	'call': _call,
+	'function': _function
+}
 
 
 def main(input_path):
@@ -65,7 +64,6 @@ def main(input_path):
 			vm_command_arguments = line_tokens[1:]
 			f.write(VM_COMMANDS[vm_command](class_name, command_counter, *vm_command_arguments))
 			command_counter += 1
-		f.write(PROGRAM_END)
 
 
 def _parse_class_name(input_path):

@@ -1,2 +1,1 @@
-push temp 2
-pop temp 3
+function Main.abracadabra 2

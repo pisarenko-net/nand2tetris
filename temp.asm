@@ -1,28 +1,16 @@
-// push temp 2
-@5
-A=A+1
-A=A+1
-A=M
+// function Main.abracadabra
+(Main.abracadabra)
+@0
 D=A
 @SP
 A=M
 M=D
 @SP
 M=M+1
-// pop temp 3
-@SP
-M=M-1
-@SP
-A=M
-A=M
+@0
 D=A
-@5
+@SP
 A=M
-A=A+1
-A=A+1
-A=A+1
 M=D
-// program end loop
-(VERY_END)
-@VERY_END
-0;JMP
+@SP
+M=M+1
