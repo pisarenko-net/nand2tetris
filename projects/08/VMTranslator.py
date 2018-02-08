@@ -16,6 +16,7 @@ from VMBranch import if_goto as _if_goto
 from VMBranch import label as _label
 from VMFunction import call as _call
 from VMFunction import function as _function
+from VMFunction import ret as _return
 from VMPush import pop as _pop
 from VMPush import push as _push
 
@@ -43,7 +44,8 @@ VM_COMMANDS = {
 	'goto': _goto,
 
 	'call': _call,
-	'function': _function
+	'function': _function,
+	'return': _return
 }
 
 

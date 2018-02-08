@@ -2,7 +2,7 @@ from VMCommon import WRITE_AND_INCREMENT_SP
 from VMCommon import READ_AND_DECREMENT_SP
 from VMCommon import COPY_FROM_A_TO_D
 from VMCommon import WRITE_TO_MEMORY_FROM_REGISTER
-from VMCommon import READ_MEMORY_TO_REGISTER
+from VMCommon import FOLLOW_POINTER
 
 
 MEMORY_SEGMENT_ADDRESSES = {
@@ -28,16 +28,16 @@ def push(class_name, command_number, memory_segment, value):
 	if memory_segment == 'constant':
 		output += COPY_FROM_A_TO_D
 	elif memory_segment == 'static':
-		output += READ_MEMORY_TO_REGISTER
+		output += FOLLOW_POINTER
 		output += COPY_FROM_A_TO_D
 	else:
 		if memory_segment in MEMORY_SEGMENT_ADDRESSES:
-			output += READ_MEMORY_TO_REGISTER
+			output += FOLLOW_POINTER
 
 		if address_offset != 0:
 			output += _increment_memory(address_offset)
 
-		output += READ_MEMORY_TO_REGISTER
+		output += FOLLOW_POINTER
 		output += COPY_FROM_A_TO_D
 
 	output += WRITE_AND_INCREMENT_SP
@@ -57,7 +57,7 @@ def pop(class_name, command_number, memory_segment, value):
 		if memory_segment == 'pointer':
 			output += WRITE_TO_MEMORY_FROM_REGISTER
 		elif memory_segment in MEMORY_SEGMENT_ADDRESSES:
-			output += READ_MEMORY_TO_REGISTER
+			output += FOLLOW_POINTER
 
 		if address_offset != 0:
 			output += _increment_memory(address_offset)
