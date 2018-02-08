@@ -1,3 +1,5 @@
+ADDRESS = '@{address}\n'
+
 WRITE_AND_INCREMENT_SP = '''@SP
 A=M
 M=D

@@ -61,7 +61,7 @@ def push(class_name, command_number, memory_segment, value):
 def pop(class_name, command_number, memory_segment, value):
 	address_offset = int(value)
 
-	output = COMMENT.format(command='pop', memory_segment_name=memory_segment, value=address_offset)
+	output = COMMENT_TEMPLATE.format(command='pop', memory_segment_name=memory_segment, value=address_offset)
 	output += READ_AND_DECREMENT_SP
 	output += ADDRESS_TEMPLATE.format(address=_get_base_address(class_name, memory_segment, address_offset))
 

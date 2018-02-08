@@ -30,7 +30,3 @@ D=A+D
 A=M
 A=A-1
 M=D
-// program end loop
-(VERY_END)
-@VERY_END
-0;JMP

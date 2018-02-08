@@ -15,6 +15,7 @@ A=M
 D=A
 @THIS
 M=D
+M=D
 // push constant 3040
 @3040
 D=A
@@ -31,6 +32,8 @@ A=M
 A=M
 D=A
 @THAT
+M=D
+A=A+1
 M=D
 // push constant 32
 @32

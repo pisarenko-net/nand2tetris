@@ -1,20 +1,15 @@
+from VMCommon import ADDRESS
+from VMCommon import COPY_FROM_A_TO_D
 from VMCommon import FOLLOW_POINTER
 from VMCommon import READ_AND_DECREMENT_SP
+from VMCommon import WRITE_AND_INCREMENT_SP
 
-COMMENT = '// {command} {function_name}\n'
+
+COMMENT = '// {command} {function_name} {argument_num}\n'
 
 RETURN_ADDRESS = 'RET${class_name}${command_number}'
 
 LABEL = '({address})\n'
-
-PUSH_TO_STACK = '''@{value}
-D=A
-@SP
-A=M
-M=D
-@SP
-M=M+1
-'''
 
 GOTO_FUNCTION = '''@{function_name}
 0;JMP
@@ -35,16 +30,20 @@ M=D
 
 
 def call(class_name, command_number, function_name, argument_num):
-	output = COMMENT.format(command='call', function_name=function_name)
+	output = COMMENT.format(command='call', function_name=function_name, argument_num=argument_num)
 
 	argument_num = int(argument_num)
 	return_address = RETURN_ADDRESS.format(class_name=class_name, command_number=command_number)
 
-	output += PUSH_TO_STACK.format(value=return_address)
-	output += PUSH_TO_STACK.format(value='LCL')
-	output += PUSH_TO_STACK.format(value='ARG')
-	output += PUSH_TO_STACK.format(value='THIS')
-	output += PUSH_TO_STACK.format(value='THAT')
+	output += ADDRESS.format(address=return_address)
+	output += COPY_FROM_A_TO_D
+	output += WRITE_AND_INCREMENT_SP
+
+	for address in ['LCL', 'ARG', 'THIS', 'THAT']:
+		output += ADDRESS.format(address=address)
+		output += FOLLOW_POINTER
+		output += COPY_FROM_A_TO_D
+		output += WRITE_AND_INCREMENT_SP
 
 	output += READ.format(address='SP')
 	output += SUBTRACT.format(value=5)
@@ -63,20 +62,22 @@ def call(class_name, command_number, function_name, argument_num):
 
 
 def function(class_name, command_number, function_name, local_variable_num):
-	output = COMMENT.format(command='function', function_name=function_name)
+	output = COMMENT.format(command='function', function_name=function_name, argument_num=local_variable_num)
 
 	local_variable_num = int(local_variable_num)
 
 	output += LABEL.format(address=function_name)
 
 	for i in range(0, local_variable_num):
-		output += PUSH_TO_STACK.format(value='0')
+		output += ADDRESS.format(address='0')
+		output += COPY_FROM_A_TO_D
+		output += WRITE_AND_INCREMENT_SP
 
 	return output
 
 
 def ret(class_name, command_number):
-	output = COMMENT.format(command='return', function_name='')
+	output = COMMENT.format(command='return', function_name='', argument_num='')
 
 	output += READ.format(address='LCL')
 	output += STORE.format(address='ENDFRAME')
