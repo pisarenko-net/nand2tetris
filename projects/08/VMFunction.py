@@ -82,6 +82,12 @@ def ret(class_name, command_number):
 	output += READ.format(address='LCL')
 	output += STORE.format(address='ENDFRAME')
 
+	output += SUBTRACT.format(value=5)
+	output += 'A=D\n'
+	output += 'A=M\n'
+	output += 'D=A\n'
+	output += STORE.format(address='RETURN_ADDRESS')
+
 	output += READ_AND_DECREMENT_SP
 	output += '@ARG\n'
 	output += 'A=M\n'
@@ -119,14 +125,9 @@ def ret(class_name, command_number):
 	output += 'D=A\n'
 	output += STORE.format(address='LCL')
 
-	output += READ.format(address='ENDFRAME')
-	output += SUBTRACT.format(value=5)
-	output += 'A=D\n'
+	output += ADDRESS.format(address='RETURN_ADDRESS')
 	output += FOLLOW_POINTER
-	output += 'D=A\n'
-	output += '''A=D
-0;JMP
-'''
+	output += '0;JMP\n'
 
 	return output
 
