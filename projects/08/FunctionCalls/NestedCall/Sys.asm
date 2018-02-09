@@ -439,6 +439,9 @@ A=M
 D=A
 @ENDFRAME
 M=D
+@ENDFRAME
+A=M
+D=A
 @5
 D=D-A
 A=D
@@ -580,6 +583,9 @@ A=M
 D=A
 @ENDFRAME
 M=D
+@ENDFRAME
+A=M
+D=A
 @5
 D=D-A
 A=D

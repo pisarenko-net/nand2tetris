@@ -1,9 +1,9 @@
 from VMCommon import ADDRESS
-from VMCommon import WRITE_AND_INCREMENT_SP
-from VMCommon import READ_AND_DECREMENT_SP
-from VMCommon import COPY_FROM_A_TO_D
-from VMCommon import WRITE_TO_MEMORY_FROM_REGISTER
 from VMCommon import FOLLOW_POINTER
+from VMCommon import LOAD_VALUE_TO_REGISTER
+from VMCommon import READ_AND_DECREMENT_SP
+from VMCommon import WRITE_TO_MEMORY_FROM_REGISTER
+from VMCommon import WRITE_AND_INCREMENT_SP
 
 
 MEMORY_SEGMENT_ADDRESSES = {
@@ -25,10 +25,10 @@ def push(class_name, command_number, memory_segment, value):
 	output += ADDRESS.format(address=_get_base_address(class_name, memory_segment, address_offset))
 
 	if memory_segment == 'constant':
-		output += COPY_FROM_A_TO_D
+		output += LOAD_VALUE_TO_REGISTER
 	elif memory_segment == 'static':
 		output += FOLLOW_POINTER
-		output += COPY_FROM_A_TO_D
+		output += LOAD_VALUE_TO_REGISTER
 	else:
 		if memory_segment in MEMORY_SEGMENT_ADDRESSES:
 			output += FOLLOW_POINTER
@@ -37,7 +37,7 @@ def push(class_name, command_number, memory_segment, value):
 			output += _increment_memory(address_offset)
 
 		output += FOLLOW_POINTER
-		output += COPY_FROM_A_TO_D
+		output += LOAD_VALUE_TO_REGISTER
 
 	output += WRITE_AND_INCREMENT_SP
 	return output

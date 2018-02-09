@@ -1,48 +1,55 @@
 from VMCommon import ADDRESS
-from VMCommon import COPY_FROM_A_TO_D
 from VMCommon import FOLLOW_POINTER
+from VMCommon import LOAD_VALUE_TO_REGISTER
 from VMCommon import READ_AND_DECREMENT_SP
+from VMCommon import STORE_VALUE_FROM_REGISTER
 from VMCommon import WRITE_AND_INCREMENT_SP
+from VMCommon import WRITE_TO_MEMORY_FROM_REGISTER
 
+
+RETURN_ADDRESS = 'RETURN_ADDRESS'
+
+OFFSET_ENDFRAME = {
+	'THAT': 1,
+	'THIS': 2,
+	'ARG': 3,
+	'LCL': 4,
+	RETURN_ADDRESS: 5
+}
 
 COMMENT = '// {command} {function_name} {argument_num}\n'
 
-RETURN_ADDRESS = 'RET${class_name}${command_number}'
+RETURN_ADDRESS_LABEL = 'RET${class_name}${command_number}'
 
 LABEL = '({address})\n'
 
-GOTO_FUNCTION = '''@{function_name}
-0;JMP
-'''
-
-READ = '''@{address}
-A=M
-D=A
-'''
+JUMP = '0;JMP\n'
 
 SUBTRACT = '''@{value}
 D=D-A
 '''
 
-STORE = '''@{address}
-M=D
-'''
+GOTO = ADDRESS + JUMP
+
+READ = ADDRESS + FOLLOW_POINTER + LOAD_VALUE_TO_REGISTER
+
+STORE = ADDRESS + WRITE_TO_MEMORY_FROM_REGISTER
 
 
 def call(class_name, command_number, function_name, argument_num):
 	output = COMMENT.format(command='call', function_name=function_name, argument_num=argument_num)
 
 	argument_num = int(argument_num)
-	return_address = RETURN_ADDRESS.format(class_name=class_name, command_number=command_number)
+	return_address = RETURN_ADDRESS_LABEL.format(class_name=class_name, command_number=command_number)
 
 	output += ADDRESS.format(address=return_address)
-	output += COPY_FROM_A_TO_D
+	output += LOAD_VALUE_TO_REGISTER
 	output += WRITE_AND_INCREMENT_SP
 
 	for address in ['LCL', 'ARG', 'THIS', 'THAT']:
 		output += ADDRESS.format(address=address)
 		output += FOLLOW_POINTER
-		output += COPY_FROM_A_TO_D
+		output += LOAD_VALUE_TO_REGISTER
 		output += WRITE_AND_INCREMENT_SP
 
 	output += READ.format(address='SP')
@@ -54,7 +61,7 @@ def call(class_name, command_number, function_name, argument_num):
 	output += READ.format(address='SP')
 	output += STORE.format(address='LCL')
 
-	output += GOTO_FUNCTION.format(function_name=function_name)
+	output += GOTO.format(address=function_name)
 
 	output += LABEL.format(address=return_address)
 
@@ -70,7 +77,7 @@ def function(class_name, command_number, function_name, local_variable_num):
 
 	for i in range(0, local_variable_num):
 		output += ADDRESS.format(address='0')
-		output += COPY_FROM_A_TO_D
+		output += LOAD_VALUE_TO_REGISTER
 		output += WRITE_AND_INCREMENT_SP
 
 	return output
@@ -82,61 +89,32 @@ def ret(class_name, command_number):
 	output += READ.format(address='LCL')
 	output += STORE.format(address='ENDFRAME')
 
-	output += SUBTRACT.format(value=5)
-	output += 'A=D\n'
-	output += 'A=M\n'
-	output += 'D=A\n'
-	output += STORE.format(address='RETURN_ADDRESS')
+	output += _set_address_from_endframe(RETURN_ADDRESS, OFFSET_ENDFRAME[RETURN_ADDRESS])
 
 	output += READ_AND_DECREMENT_SP
-	output += '@ARG\n'
-	output += 'A=M\n'
-	output += 'M=D\n'
+	output += ADDRESS.format(address='ARG')
+	output += FOLLOW_POINTER
+	output += WRITE_TO_MEMORY_FROM_REGISTER
 
 	output += READ.format(address='ARG')
 	output += 'D=D+1\n'
 	output += STORE.format(address='SP')
 
-	output += READ.format(address='ENDFRAME')
-	output += SUBTRACT.format(value=1)
-	output += 'A=D\n'
-	output += FOLLOW_POINTER
-	output += 'D=A\n'
-	output += STORE.format(address='THAT')
+	for address in ['THAT', 'THIS', 'ARG', 'LCL']:
+		output += _set_address_from_endframe(address, OFFSET_ENDFRAME[address])
 
-	output += READ.format(address='ENDFRAME')
-	output += SUBTRACT.format(value=2)
-	output += 'A=D\n'
+	output += ADDRESS.format(address=RETURN_ADDRESS)
 	output += FOLLOW_POINTER
-	output += 'D=A\n'
-	output += STORE.format(address='THIS')
-
-	output += READ.format(address='ENDFRAME')
-	output += SUBTRACT.format(value=3)
-	output += 'A=D\n'
-	output += FOLLOW_POINTER
-	output += 'D=A\n'
-	output += STORE.format(address='ARG')
-
-	output += READ.format(address='ENDFRAME')
-	output += SUBTRACT.format(value=4)
-	output += 'A=D\n'
-	output += FOLLOW_POINTER
-	output += 'D=A\n'
-	output += STORE.format(address='LCL')
-
-	output += ADDRESS.format(address='RETURN_ADDRESS')
-	output += FOLLOW_POINTER
-	output += '0;JMP\n'
+	output += JUMP
 
 	return output
 
-# endFrame = LCL
-# retAddr = *(endFrame-5)
-# *ARG = pop()
-# SP=ARG+1
-# THAT=*(endFrame-1)
-# THIS=*(endFrame-2)
-# ARG=*(endFrame-3)
-# LCL=*(endFrame-4)
-# goto retAddr
+
+def _set_address_from_endframe(address, offset_endframe):
+	output = READ.format(address='ENDFRAME')
+	output += SUBTRACT.format(value=offset_endframe)
+	output += STORE_VALUE_FROM_REGISTER
+	output += FOLLOW_POINTER
+	output += LOAD_VALUE_TO_REGISTER
+	output += STORE.format(address=address)
+	return output
