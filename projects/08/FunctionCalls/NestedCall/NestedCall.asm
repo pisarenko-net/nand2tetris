@@ -97,6 +97,7 @@ A=M
 A=M
 D=A
 @5
+A=A+1
 M=D
 // label LOOP
 (LOOP)

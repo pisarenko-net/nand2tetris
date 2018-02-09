@@ -56,8 +56,9 @@ def pop(class_name, command_number, memory_segment, value):
 		if memory_segment in MEMORY_SEGMENT_ADDRESSES:
 			output += FOLLOW_POINTER
 
-			if address_offset != 0:
-				output += _increment_memory(address_offset)
+		# could be 'temp'
+		if address_offset != 0:
+			output += _increment_memory(address_offset)
 
 		output += WRITE_TO_MEMORY_FROM_REGISTER
 	return output
