@@ -36,6 +36,15 @@ READ = ADDRESS + FOLLOW_POINTER + LOAD_VALUE_TO_REGISTER
 STORE = ADDRESS + WRITE_TO_MEMORY_FROM_REGISTER
 
 
+def bootstrap():
+	output = COMMENT.format(command='bootstrap', function_name='', argument_num='')
+	output += ADDRESS.format(address='256')
+	output += LOAD_VALUE_TO_REGISTER
+	output += STORE.format(address='SP')
+	output += call('bootstrap', 0, 'Sys.init', 0)
+	return output
+
+
 def call(class_name, command_number, function_name, argument_num):
 	output = COMMENT.format(command='call', function_name=function_name, argument_num=argument_num)
 

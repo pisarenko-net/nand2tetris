@@ -1,4 +1,4 @@
-// function SimpleFunction.test
+// function SimpleFunction.test 2
 (SimpleFunction.test)
 @0
 D=A
@@ -114,11 +114,21 @@ D=A-D
 A=M
 A=A-1
 M=D
-// return 
+// return  
 @LCL
 A=M
 D=A
 @ENDFRAME
+M=D
+@ENDFRAME
+A=M
+D=A
+@5
+D=D-A
+A=D
+A=M
+D=A
+@RETURN_ADDRESS
 M=D
 @SP
 M=M-1
@@ -175,13 +185,6 @@ A=M
 D=A
 @LCL
 M=D
-@ENDFRAME
+@RETURN_ADDRESS
 A=M
-D=A
-@5
-D=D-A
-A=D
-A=M
-D=A
-A=D
 0;JMP

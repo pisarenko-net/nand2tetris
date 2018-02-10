@@ -1,3 +1,63 @@
+// bootstrap  
+@256
+D=A
+@SP
+M=D
+// call Sys.init 0
+@RET$bootstrap$0
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@LCL
+A=M
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+A=M
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+A=M
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+A=M
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+A=M
+D=A
+@5
+D=D-A
+@ARG
+M=D
+@SP
+A=M
+D=A
+@LCL
+M=D
+@Sys.init
+0;JMP
+(RET$bootstrap$0)
 // function Sys.init 0
 (Sys.init)
 // push constant 4000
@@ -35,7 +95,7 @@ D=A
 @THAT
 M=D
 // call Sys.main 0
-@RET$Sys$5
+@RET$Sys$6
 D=A
 @SP
 A=M
@@ -88,7 +148,7 @@ D=A
 M=D
 @Sys.main
 0;JMP
-(RET$Sys$5)
+(RET$Sys$6)
 // pop temp 1
 @SP
 M=M-1
@@ -244,7 +304,7 @@ M=D
 @SP
 M=M+1
 // call Sys.add12 1
-@RET$Sys$21
+@RET$Sys$22
 D=A
 @SP
 A=M
@@ -299,7 +359,7 @@ D=A
 M=D
 @Sys.add12
 0;JMP
-(RET$Sys$21)
+(RET$Sys$22)
 // pop temp 0
 @SP
 M=M-1
