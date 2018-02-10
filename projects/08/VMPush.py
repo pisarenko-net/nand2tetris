@@ -1,4 +1,5 @@
 from VMCommon import ADDRESS
+from VMCommon import COMMENT
 from VMCommon import FOLLOW_POINTER
 from VMCommon import LOAD_VALUE_TO_REGISTER
 from VMCommon import READ_AND_DECREMENT_SP
@@ -15,13 +16,11 @@ MEMORY_SEGMENT_ADDRESSES = {
 
 TEMP_BASE_ADDRESS = 5
 
-COMMENT = '// {command} {memory_segment_name} {value}\n'
-
 
 def push(class_name, command_number, memory_segment, value):
 	address_offset = int(value)
 
-	output = COMMENT.format(command='push', memory_segment_name=memory_segment, value=value)
+	output = COMMENT.format(command='push', name=memory_segment, arg=value)
 	output += ADDRESS.format(address=_get_base_address(class_name, memory_segment, address_offset))
 
 	if memory_segment == 'constant':
@@ -33,6 +32,7 @@ def push(class_name, command_number, memory_segment, value):
 		if memory_segment in MEMORY_SEGMENT_ADDRESSES:
 			output += FOLLOW_POINTER
 
+		# could be 'temp'
 		if address_offset != 0:
 			output += _increment_memory(address_offset)
 
@@ -46,7 +46,7 @@ def push(class_name, command_number, memory_segment, value):
 def pop(class_name, command_number, memory_segment, value):
 	address_offset = int(value)
 
-	output = COMMENT.format(command='pop', memory_segment_name=memory_segment, value=address_offset)
+	output = COMMENT.format(command='pop', name=memory_segment, arg=address_offset)
 	output += READ_AND_DECREMENT_SP
 	output += ADDRESS.format(address=_get_base_address(class_name, memory_segment, address_offset))
 

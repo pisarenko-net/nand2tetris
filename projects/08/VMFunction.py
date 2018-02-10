@@ -1,6 +1,10 @@
 from VMCommon import ADDRESS
+from VMCommon import COMMENT
 from VMCommon import FOLLOW_POINTER
+from VMCommon import LABEL
 from VMCommon import LOAD_VALUE_TO_REGISTER
+from VMCommon import GOTO
+from VMCommon import JUMP
 from VMCommon import READ_AND_DECREMENT_SP
 from VMCommon import STORE_VALUE_FROM_REGISTER
 from VMCommon import WRITE_AND_INCREMENT_SP
@@ -17,19 +21,11 @@ OFFSET_ENDFRAME = {
 	RETURN_ADDRESS: 5
 }
 
-COMMENT = '// {command} {function_name} {argument_num}\n'
-
 RETURN_ADDRESS_LABEL = 'RET${class_name}${command_number}'
-
-LABEL = '({address})\n'
-
-JUMP = '0;JMP\n'
 
 SUBTRACT = '''@{value}
 D=D-A
 '''
-
-GOTO = ADDRESS + JUMP
 
 READ = ADDRESS + FOLLOW_POINTER + LOAD_VALUE_TO_REGISTER
 
@@ -37,7 +33,7 @@ STORE = ADDRESS + WRITE_TO_MEMORY_FROM_REGISTER
 
 
 def bootstrap():
-	output = COMMENT.format(command='bootstrap', function_name='', argument_num='')
+	output = COMMENT.format(command='bootstrap', name='', arg='')
 	output += ADDRESS.format(address='256')
 	output += LOAD_VALUE_TO_REGISTER
 	output += STORE.format(address='SP')
@@ -46,7 +42,7 @@ def bootstrap():
 
 
 def call(class_name, command_number, function_name, argument_num):
-	output = COMMENT.format(command='call', function_name=function_name, argument_num=argument_num)
+	output = COMMENT.format(command='call', name=function_name, arg=argument_num)
 
 	argument_num = int(argument_num)
 	return_address = RETURN_ADDRESS_LABEL.format(class_name=class_name, command_number=command_number)
@@ -56,9 +52,7 @@ def call(class_name, command_number, function_name, argument_num):
 	output += WRITE_AND_INCREMENT_SP
 
 	for address in ['LCL', 'ARG', 'THIS', 'THAT']:
-		output += ADDRESS.format(address=address)
-		output += FOLLOW_POINTER
-		output += LOAD_VALUE_TO_REGISTER
+		output += READ.format(address=address)
 		output += WRITE_AND_INCREMENT_SP
 
 	output += READ.format(address='SP')
@@ -78,7 +72,7 @@ def call(class_name, command_number, function_name, argument_num):
 
 
 def function(class_name, command_number, function_name, local_variable_num):
-	output = COMMENT.format(command='function', function_name=function_name, argument_num=local_variable_num)
+	output = COMMENT.format(command='function', name=function_name, arg=local_variable_num)
 
 	local_variable_num = int(local_variable_num)
 
@@ -93,7 +87,7 @@ def function(class_name, command_number, function_name, local_variable_num):
 
 
 def ret(class_name, command_number):
-	output = COMMENT.format(command='return', function_name='', argument_num='')
+	output = COMMENT.format(command='return', name='', arg='')
 
 	output += READ.format(address='LCL')
 	output += STORE.format(address='ENDFRAME')

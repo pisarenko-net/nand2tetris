@@ -88,14 +88,14 @@ def _parse_class_name(input_path):
 
 def _translate_class(output_file, class_name, command_counter, vm_source_code):
 	for line in vm_source_code:
-			clean_line = _remove_comment(line)
-			if not clean_line:
-				continue
-			line_tokens = clean_line.split(' ')
-			vm_command = line_tokens[0]
-			vm_command_arguments = line_tokens[1:]
-			output_file.write(VM_COMMANDS[vm_command](class_name, command_counter, *vm_command_arguments))
-			command_counter += 1
+		clean_line = _remove_comment(line)
+		if not clean_line:
+			continue
+		line_tokens = clean_line.split(' ')
+		vm_command = line_tokens[0]
+		vm_command_arguments = line_tokens[1:]
+		output_file.write(VM_COMMANDS[vm_command](class_name, command_counter, *vm_command_arguments))
+		command_counter += 1
 	return command_counter
 
 

@@ -1,5 +1,9 @@
 ADDRESS = '@{address}\n'
 
+LABEL = '({address})\n'
+
+COMMENT = '// {command} {name} {arg}\n'
+
 WRITE_AND_INCREMENT_SP = '''@SP
 A=M
 M=D
@@ -22,3 +26,7 @@ STORE_VALUE_FROM_REGISTER = 'A=D\n'
 WRITE_TO_MEMORY_FROM_REGISTER = 'M=D\n'
 
 FOLLOW_POINTER = 'A=M\n'
+
+JUMP = '0;JMP\n'
+
+GOTO = ADDRESS + JUMP
