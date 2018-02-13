@@ -1,0 +1,54 @@
+class World {
+	field Array cells;
+
+	constructor World new() {
+		let cells = Array.new(64);
+		do World.clear();
+		return this;
+	}
+
+	method void clear() {
+		var int currentRow, currentColumn;
+		var Array row;
+
+		let currentRow = 0;
+
+		while (currentRow < 64) {
+			let row = Array.new(128);
+
+			let currentColumn = 0;
+			while (currentColumn < 128) {
+				let row[currentColumn] = false;
+				let currentColumn = currentColumn + 1;
+			}
+
+			let cells[currentRow] = row;
+			let currentRow = currentRow + 1;
+		}
+		return;
+	}
+
+	method World computeNextGeneration() {
+		return World.new();
+	}
+
+	method boolean getCell(int row, int column) {
+		var Array row;
+		var boolean currentValue;
+		let row = cells[row];
+		let currentValue = row[column];
+		return currentValue;
+	}
+
+	method void toggleCell(int row, int column) {
+		var boolean currentValue;
+		var Array row;
+
+		let row = cells[row];
+		let currentValue = row[column];
+		let currentValue = ~currentValue;
+		let row[column] = currentValue;
+
+		return;
+	}
+}

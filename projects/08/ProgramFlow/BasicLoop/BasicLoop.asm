@@ -16,7 +16,7 @@ D=A
 @LCL
 A=M
 M=D
-// label LOOP_START
+// label LOOP_START 
 (LOOP_START)
 // push argument 0
 @ARG
@@ -118,7 +118,7 @@ A=M
 M=D
 @SP
 M=M+1
-// if-goto LOOP_START
+// if-goto LOOP_START 
 @SP
 M=M-1
 @SP
@@ -137,7 +137,3 @@ A=M
 M=D
 @SP
 M=M+1
-// program end loop
-(VERY_END)
-@VERY_END
-0;JMP

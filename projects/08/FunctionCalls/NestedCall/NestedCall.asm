@@ -77,6 +77,7 @@ A=M
 D=A
 @THIS
 M=D
+M=D
 // push constant 5000
 @5000
 D=A
@@ -93,6 +94,8 @@ A=M
 A=M
 D=A
 @THAT
+M=D
+A=A+1
 M=D
 // call Sys.main 0
 @RET$Sys$6
@@ -218,6 +221,7 @@ A=M
 D=A
 @THIS
 M=D
+M=D
 // push constant 5001
 @5001
 D=A
@@ -234,6 +238,8 @@ A=M
 A=M
 D=A
 @THAT
+M=D
+A=A+1
 M=D
 // push constant 200
 @200
@@ -586,6 +592,7 @@ A=M
 D=A
 @THIS
 M=D
+M=D
 // push constant 5002
 @5002
 D=A
@@ -602,6 +609,8 @@ A=M
 A=M
 D=A
 @THAT
+M=D
+A=A+1
 M=D
 // push argument 0
 @ARG

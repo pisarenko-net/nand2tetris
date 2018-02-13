@@ -32,7 +32,7 @@ def push(class_name, command_number, memory_segment, value):
 		if memory_segment in MEMORY_SEGMENT_ADDRESSES:
 			output += FOLLOW_POINTER
 
-		# could be 'temp'
+		# could be 'temp' or 'pointer'
 		if address_offset != 0:
 			output += _increment_memory(address_offset)
 
@@ -50,13 +50,15 @@ def pop(class_name, command_number, memory_segment, value):
 	output += READ_AND_DECREMENT_SP
 	output += ADDRESS.format(address=_get_base_address(class_name, memory_segment, address_offset))
 
-	if memory_segment == 'static' or memory_segment == 'pointer':
+	if memory_segment == 'static':
 		output += WRITE_TO_MEMORY_FROM_REGISTER
 	else:
-		if memory_segment in MEMORY_SEGMENT_ADDRESSES:
+		if memory_segment == 'pointer':
+			output += WRITE_TO_MEMORY_FROM_REGISTER
+		elif memory_segment in MEMORY_SEGMENT_ADDRESSES:
 			output += FOLLOW_POINTER
 
-		# could be 'temp'
+		# could be 'temp' or 'pointer'
 		if address_offset != 0:
 			output += _increment_memory(address_offset)
 

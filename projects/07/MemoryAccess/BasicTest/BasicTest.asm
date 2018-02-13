@@ -138,6 +138,12 @@ A=M
 A=M
 D=A
 @5
+A=A+1
+A=A+1
+A=A+1
+A=A+1
+A=A+1
+A=A+1
 M=D
 // push local 0
 @LCL
