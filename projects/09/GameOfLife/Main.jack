@@ -6,7 +6,8 @@ class Main {
 
 		while (true) {
 			do world.transformToNextGeneration();
-			do Game.display(world);
+			//do Game.display(world);
+			do Sys.wait(2000);
 		}
 
 		do world.dispose();
