@@ -25,6 +25,16 @@ push local 2
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+label IF_END0
 push local 1
 push constant 4
 call Math.multiply 2
@@ -43,7 +53,6 @@ push constant 4
 add
 call Screen.drawRectangle 4
 pop temp 0
-label IF_FALSE0
 push local 1
 push constant 1
 add

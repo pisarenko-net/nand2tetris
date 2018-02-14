@@ -3,9 +3,26 @@ class World {
 
 	constructor World new() {
 		let cells = Array.new(64);
-		do World.clear();
+		do clear();
 		return this;
 	}
+
+	method void dispose() {
+		var int currentRow;
+		var Array row;
+
+		let currentRow = 0;
+
+		while (currentRow < 64) {
+			let row = cells[currentRow];
+			do row.dispose();
+			let currentRow = currentRow + 1;
+		}
+
+		do cells.dispose();
+		do Memory.deAlloc(this);
+		return;
+   }
 
 	method void clear() {
 		var int currentRow, currentColumn;
@@ -28,8 +45,61 @@ class World {
 		return;
 	}
 
-	method World computeNextGeneration() {
-		return World.new();
+	method void transformToNextGeneration() {
+		var List pendingChanges, pendingChangesPrevious;
+		var int currentRow, currentColumn;
+		var Array row;
+		var boolean areChangesPending;
+
+		let pendingChanges = List.new(-1, null);
+		let pendingChangesPrevious = List.new(-1, null);
+
+		while (currentRow < 64) {
+			let areChangesPending = areChangesPending(pendingChangesPrevious);
+
+			if (areChangesPending) {
+				do applyChanges(currentRow - 2, pendingChangesPrevious);
+			}
+			do pendingChangesPrevious.dispose();
+			let pendingChangesPrevious = pendingChanges;
+			let pendingChanges = List.new(-1, null);
+
+			let row = cells[currentRow];
+			while (currentColumn < 128) {
+				if (shouldCellToggle(currentRow, currentColumn)) {
+					let pendingChanges = List.new(currentColumn, pendingChanges);
+				}
+				let currentColumn = currentColumn + 1;
+			}
+			let currentRow = currentRow + 1;
+		}
+
+		do applyChanges(currentRow, pendingChanges);
+		do applyChanges(currentRow - 1, pendingChangesPrevious);
+
+		do pendingChanges.dispose();
+		do pendingChangesPrevious.dispose();
+
+		return;
+	}
+
+	method boolean areChangesPending(List changedColumns) {
+		var boolean isPendingListEmpty;
+		let isPendingListEmpty = changedColumns.isEmpty();
+
+		if (isPendingListEmpty) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	method void applyChanges(int row, List changedColumns) {
+		return;
+	}
+
+	method boolean shouldCellToggle(int row, int column) {
+		return false;
 	}
 
 	method boolean getCell(int row, int column) {

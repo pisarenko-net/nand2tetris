@@ -1,13 +1,16 @@
 class Main {
 	function void main() {
 		var World world;
-		var boolean value;
 
 		let world = World.new();
-		do world.toggleCell(24, 24);
-		do world.toggleCell(0, 0);
 
-		do Game.display(world);
+		while (true) {
+			do world.transformToNextGeneration();
+			do Game.display(world);
+		}
+
+		do world.dispose();
+		
 		return;
 	}
 }

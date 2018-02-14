@@ -12,8 +12,11 @@ class Game {
 			while (currentColumn < 127) {
 				let currentValue = world.getCell(currentRow, currentColumn);
 				if (currentValue) {
-					do Screen.drawRectangle(currentColumn * 4, currentRow * 4, (currentColumn * 4) + 4, (currentRow * 4) + 4);
+					do Screen.setColor(true);
+				} else {
+					do Screen.setColor(false);
 				}
+				do Screen.drawRectangle(currentColumn * 4, currentRow * 4, (currentColumn * 4) + 4, (currentRow * 4) + 4);
 				let currentColumn = currentColumn + 1;
 			}
 			let currentRow = currentRow + 1;
