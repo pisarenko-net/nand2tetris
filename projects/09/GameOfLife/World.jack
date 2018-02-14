@@ -77,11 +77,10 @@ class World {
 				let currentColumn = currentColumn + 1;
 			}
 			let currentRow = currentRow + 1;
-			do Sys.wait(100);
 		}
 
-		do applyChanges(currentRow, pendingChanges);
-		do applyChanges(currentRow - 1, pendingChangesPrevious);
+		do applyChanges(currentRow -1, pendingChanges);
+		do applyChanges(currentRow - 2, pendingChangesPrevious);
 
 		do pendingChanges.dispose();
 		do pendingChangesPrevious.dispose();
@@ -104,15 +103,13 @@ class World {
 		var List currentColumnElement;
 		var int currentColumn;
 
-		do Output.printString("Applying changes");
-		do Output.println();
-
 		let currentColumnElement = changedColumns;
+		let currentColumn = currentColumnElement.getData();
 
-		while (~(currentColumnElement = null)) {
-			let currentColumn = currentColumnElement.getData();
+		while (~(currentColumn = -1)) {
 			do toggleCell(row, currentColumn);
 			let currentColumnElement = currentColumnElement.getNext();
+			let currentColumn = currentColumnElement.getData();
 		}
 		return;
 	}
@@ -129,14 +126,14 @@ class World {
 		return currentValue;
 	}
 
-	method void toggleCell(int row, int column) {
+	method void toggleCell(int rowNumber, int columnNumber) {
 		var boolean currentValue;
 		var Array row;
 
-		let row = cells[row];
-		let currentValue = row[column];
+		let row = cells[rowNumber];
+		let currentValue = row[columnNumber];
 		let currentValue = ~currentValue;
-		let row[column] = currentValue;
+		let row[columnNumber] = currentValue;
 
 		return;
 	}
