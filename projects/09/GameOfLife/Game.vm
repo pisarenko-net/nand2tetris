@@ -67,3 +67,69 @@ goto WHILE_EXP0
 label WHILE_END0
 push constant 0
 return
+function Game.spawnVerticalOscillator 0
+push argument 0
+push argument 1
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push constant 0
+return
+function Game.spawnSpaceship 0
+push argument 0
+push argument 1
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push constant 0
+return

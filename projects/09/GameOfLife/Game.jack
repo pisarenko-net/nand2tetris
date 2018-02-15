@@ -1,27 +1,17 @@
 class Game {
-	function void run() {
+	function void spawnVerticalOscillator(World world, int row, int column) {
+		do world.toggleCell(row, column);
+		do world.toggleCell(row+1, column);
+		do world.toggleCell(row+2, column);
 		return;
 	}
 
-	// this can be made faster by bypassing Screen and accessing memory directly
-	function void display(World world) {
-		var int currentRow, currentColumn;
-		var boolean currentValue;
-
-		while (currentRow < 32) {
-			let currentColumn = 0;
-			while (currentColumn < 64) {
-				let currentValue = world.isCellAlive(currentRow, currentColumn);
-				if (currentValue) {
-					do Screen.setColor(true);
-				} else {
-					do Screen.setColor(false);
-				}
-				do Screen.drawRectangle(currentColumn * 8, currentRow * 8, (currentColumn * 8) + 7, (currentRow * 8) + 7);
-				let currentColumn = currentColumn + 1;
-			}
-			let currentRow = currentRow + 1;
-		}
+	function void spawnSpaceship(World world, int row, int column) {
+		do world.toggleCell(row, column+2);
+		do world.toggleCell(row+1, column+2);
+		do world.toggleCell(row+1, column);
+		do world.toggleCell(row+2, column+2);
+		do world.toggleCell(row+2, column+1);
 		return;
 	}
 }

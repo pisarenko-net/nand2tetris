@@ -4,26 +4,12 @@ class Main {
 
 		let world = World.new();
 
-		// oscillator
-		do world.toggleCell(24, 24);
-		do world.toggleCell(25, 24);
-		do world.toggleCell(26, 24);
-
-		// spaceship
-		do world.toggleCell(0, 3);
-		do world.toggleCell(1, 3);
-		do world.toggleCell(1, 1);
-		do world.toggleCell(2, 3);
-		do world.toggleCell(2, 2);		
+		do Game.spawnVerticalOscillator(world, 24, 24);
+		do Game.spawnVerticalOscillator(world, 29, 51);
+		do Game.spawnSpaceship(world, 2, 2);
 
 		while (true) {
-			//do Output.moveCursor(15, 3);
-			//do Output.printString("redraw ");
-			//do Game.display(world);
-			//do Output.moveCursor(15, 3);
-			//do Output.printString("compute");
 			do world.transformToNextGeneration();
-			//do Sys.wait(2000);
 		}
 
 		do world.dispose();

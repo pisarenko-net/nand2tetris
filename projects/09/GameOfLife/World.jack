@@ -1,23 +1,28 @@
 class World {
-	field Array cells;
+	field Array cells, pendingRow, pendingRowPrevious, tempRow;
 
 	constructor World new() {
 		let cells = Array.new(32);
+		let pendingRow = Array.new(64);
+		let pendingRowPrevious = Array.new(64);
 		do clear();
 		return this;
 	}
 
 	method void dispose() {
-		var int currentRow;
-		var Array row;
+		var int row;
+		var Array currentRow;
 
-		let currentRow = 0;
+		let row = 0;
 
-		while (currentRow < 32) {
-			let row = cells[currentRow];
-			do row.dispose();
-			let currentRow = currentRow + 1;
+		while (row < 32) {
+			let currentRow = cells[row];
+			do currentRow.dispose();
+			let row = row + 1;
 		}
+
+		do pendingRow.dispose();
+		do pendingRowPrevious.dispose();
 
 		do cells.dispose();
 		do Memory.deAlloc(this);
@@ -25,100 +30,52 @@ class World {
    }
 
 	method void clear() {
-		var int currentRow, currentColumn;
-		var Array row;
+		var int row, column;
+		var Array currentRow;
 
-		let currentRow = 0;
+		let row = 0;
 
-		while (currentRow < 32) {
-			let row = Array.new(64);
+		while (row < 32) {
+			let currentRow = Array.new(64);
 
-			let currentColumn = 0;
-			while (currentColumn < 64) {
-				let row[currentColumn] = false;
-				let currentColumn = currentColumn + 1;
+			let column = 0;
+			while (column < 64) {
+				let currentRow[column] = false;
+				let column = column + 1;
 			}
 
-			let cells[currentRow] = row;
-			let currentRow = currentRow + 1;
+			let cells[row] = currentRow;
+			let row = row + 1;
 		}
 		return;
 	}
 
 	method void transformToNextGeneration() {
-		var List pendingChanges, pendingChangesPrevious;
-		var int currentRow, currentColumn;
-		var Array row;
+		var boolean newValue;
+		var int row, column;
+		var Array currentRow;
 
-		let currentRow = 0;
+		let row = 0;
 
-		let pendingChanges = List.new(-1, null);
-		let pendingChangesPrevious = List.new(-1, null);
+		while (row < 32) {
+			let column = 0;
+			let currentRow = cells[row];
 
-		while (currentRow < 32) {
-			if (areChangesPending(pendingChangesPrevious)) {
-				do applyChanges(currentRow - 2, pendingChangesPrevious);
-			}
-			do pendingChangesPrevious.dispose();
-			let pendingChangesPrevious = pendingChanges;
-			let pendingChanges = List.new(-1, null);
+			while (column < 64) {
+				let pendingRow[column] = currentRow[column];
 
-			let row = cells[currentRow];
-			let currentColumn = 0;
-
-			while (currentColumn < 64) {
-				if (shouldCellToggle(currentRow, currentColumn)) {
-					let pendingChanges = List.new(currentColumn, pendingChanges);
+				if (shouldCellToggle(row, column)) {
+					let newValue = ~(currentRow[column]);
+					do applyCellChange(newValue, row, column);
 				}
-				let currentColumn = currentColumn + 1;
+				let column = column + 1;
 			}
-			let currentRow = currentRow + 1;
+
+			do swapRows(row);
+			let row = row + 1;
 		}
 
-		do applyChanges(currentRow - 1, pendingChanges);
-		do applyChanges(currentRow - 2, pendingChangesPrevious);
-
-		do pendingChanges.dispose();
-		do pendingChangesPrevious.dispose();
-
-		return;
-	}
-
-	method boolean areChangesPending(List changedColumns) {
-		if (changedColumns.isEmpty()) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	method void applyChanges(int row, List changedColumns) {
-		var List currentColumnElement;
-		var int currentColumn;
-
-		let currentColumnElement = changedColumns;
-		let currentColumn = currentColumnElement.getData();
-
-		while (~(currentColumn = -1)) {
-			do toggleCell(row, currentColumn);
-			let currentColumnElement = currentColumnElement.getNext();
-			let currentColumn = currentColumnElement.getData();
-		}
-		return;
-	}
-
-	method void toggleCell(int rowNumber, int columnNumber) {
-		var boolean currentValue;
-		var Array row;
-
-		let row = cells[rowNumber];
-		let currentValue = row[columnNumber];
-		let currentValue = ~currentValue;
-		let row[columnNumber] = currentValue;
-
-		do Screen.setColor(currentValue);
-		do Screen.drawRectangle(columnNumber * 8, rowNumber * 8, (columnNumber * 8) + 7, (rowNumber * 8) + 7);
-
+		do swapRowsFinal();
 		return;
 	}
 
@@ -139,14 +96,6 @@ class World {
 				return false;
 			}
 		}
-	}
-
-	method boolean isCellAlive(int row, int column) {
-		var Array row;
-		var boolean currentValue;
-		let row = cells[row];
-		let currentValue = row[column];
-		return currentValue;
 	}
 
 	method int countNeighbours(int row, int column) {
@@ -203,5 +152,54 @@ class World {
 		}
 
 		return neighbours;
+	}
+
+	method boolean isCellAlive(int row, int column) {
+		var Array row;
+		var boolean currentValue;
+		let row = cells[row];
+		let currentValue = row[column];
+		return currentValue;
+	}
+
+	method void applyCellChange(int newValue, int row, int column) {
+		let pendingRow[column] = newValue;
+		do Screen.setColor(newValue);
+		do Screen.drawRectangle(column * 8, row * 8, (column * 8) + 7, (row * 8) + 7);
+		return;
+	}
+
+	method void swapRows(int row) {
+		if (row > 0) {
+			let tempRow = cells[row - 1];
+			let cells[row - 1] = pendingRowPrevious;
+		} else {
+			let tempRow = pendingRowPrevious;
+		}
+		let pendingRowPrevious = pendingRow;
+		let pendingRow = tempRow;
+		return;
+	}
+
+	method void swapRowsFinal() {
+		let tempRow = cells[31];
+		let cells[31] = pendingRowPrevious;
+		let pendingRowPrevious = tempRow;
+		return;
+	}
+
+	method void toggleCell(int rowNumber, int columnNumber) {
+		var boolean currentValue;
+		var Array row;
+
+		let row = cells[rowNumber];
+		let currentValue = row[columnNumber];
+		let currentValue = ~currentValue;
+		let row[columnNumber] = currentValue;
+
+		do Screen.setColor(currentValue);
+		do Screen.drawRectangle(columnNumber * 8, rowNumber * 8, (columnNumber * 8) + 7, (rowNumber * 8) + 7);
+
+		return;
 	}
 }
