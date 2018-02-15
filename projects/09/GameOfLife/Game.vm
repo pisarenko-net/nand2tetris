@@ -4,7 +4,7 @@ return
 function Game.display 3
 label WHILE_EXP0
 push local 0
-push constant 63
+push constant 31
 lt
 not
 if-goto WHILE_END0
@@ -12,7 +12,7 @@ push constant 0
 pop local 1
 label WHILE_EXP1
 push local 1
-push constant 127
+push constant 63
 lt
 not
 if-goto WHILE_END1
@@ -36,20 +36,20 @@ call Screen.setColor 1
 pop temp 0
 label IF_END0
 push local 1
-push constant 4
+push constant 8
 call Math.multiply 2
 push local 0
-push constant 4
+push constant 8
 call Math.multiply 2
 push local 1
-push constant 4
+push constant 8
 call Math.multiply 2
-push constant 4
+push constant 8
 add
 push local 0
-push constant 4
+push constant 8
 call Math.multiply 2
-push constant 4
+push constant 8
 add
 call Screen.drawRectangle 4
 pop temp 0

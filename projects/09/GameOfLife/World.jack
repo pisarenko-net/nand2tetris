@@ -2,7 +2,7 @@ class World {
 	field Array cells;
 
 	constructor World new() {
-		let cells = Array.new(64);
+		let cells = Array.new(32);
 		do clear();
 		return this;
 	}
@@ -13,7 +13,7 @@ class World {
 
 		let currentRow = 0;
 
-		while (currentRow < 64) {
+		while (currentRow < 32) {
 			let row = cells[currentRow];
 			do row.dispose();
 			let currentRow = currentRow + 1;
@@ -30,11 +30,11 @@ class World {
 
 		let currentRow = 0;
 
-		while (currentRow < 64) {
-			let row = Array.new(128);
+		while (currentRow < 32) {
+			let row = Array.new(64);
 
 			let currentColumn = 0;
-			while (currentColumn < 128) {
+			while (currentColumn < 64) {
 				let row[currentColumn] = false;
 				let currentColumn = currentColumn + 1;
 			}
@@ -55,7 +55,7 @@ class World {
 		let pendingChanges = List.new(-1, null);
 		let pendingChangesPrevious = List.new(-1, null);
 
-		while (currentRow < 64) {
+		while (currentRow < 32) {
 			if (areChangesPending(pendingChangesPrevious)) {
 				do applyChanges(currentRow - 2, pendingChangesPrevious);
 			}
@@ -66,7 +66,7 @@ class World {
 			let row = cells[currentRow];
 			let currentColumn = 0;
 
-			while (currentColumn < 128) {
+			while (currentColumn < 64) {
 				if (shouldCellToggle(currentRow, currentColumn)) {
 					let pendingChanges = List.new(currentColumn, pendingChanges);
 				}
@@ -156,34 +156,46 @@ class World {
 				let neighbours = neighbours + 1;
 			}
 			// NW
-			if ((column > 0) & (isCellAlive(row-1, column-1))) {
-				let neighbours = neighbours + 1;
+			if (column > 0) {
+				if (isCellAlive(row-1, column-1)) {
+					let neighbours = neighbours + 1;
+				}
 			}
 			// NE
-			if ((column < 127) & (isCellAlive(row-1, column+1))) {
-				let neighbours = neighbours + 1;
+			if (column < 63) {
+				if (isCellAlive(row-1, column+1)) {
+					let neighbours = neighbours + 1;
+				}
 			}
 		}
 		// west
-		if ((column > 0) & (isCellAlive(row, column-1))) {
-			let neighbours = neighbours + 1;
+		if (column > 0) {
+			if (isCellAlive(row, column-1)) {
+				let neighbours = neighbours + 1;
+			}
 		}
 		// east
-		if ((column < 127) & (isCellAlive(row, column+1))) {
-			let neighbours = neighbours + 1;
+		if (column < 63) {
+			if (isCellAlive(row, column+1)) {
+				let neighbours = neighbours + 1;
+			}
 		}
-		if (row < 63) {
+		if (row < 31) {
 			// south
 			if (isCellAlive(row+1, column)) {
 				let neighbours = neighbours + 1;
 			}
 			// SW
-			if ((column > 0) & isCellAlive(row+1, column-1)) {
-				let neighbours = neighbours + 1;
+			if (column > 0) {
+				if (isCellAlive(row+1, column-1)) {
+					let neighbours = neighbours + 1;
+				}
 			}
 			// SE
-			if ((column < 127) & isCellAlive(row+1, column+1)) {
-				let neighbours = neighbours + 1;
+			if (column < 63) {
+				if (isCellAlive(row+1, column+1)) {
+					let neighbours = neighbours + 1;
+				}
 			}
 		}
 
