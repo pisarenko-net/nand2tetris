@@ -8,16 +8,16 @@ class Game {
 		var int currentRow, currentColumn;
 		var boolean currentValue;
 
-		while (currentRow < 31) {
+		while (currentRow < 32) {
 			let currentColumn = 0;
-			while (currentColumn < 63) {
+			while (currentColumn < 64) {
 				let currentValue = world.isCellAlive(currentRow, currentColumn);
 				if (currentValue) {
 					do Screen.setColor(true);
 				} else {
 					do Screen.setColor(false);
 				}
-				do Screen.drawRectangle(currentColumn * 8, currentRow * 8, (currentColumn * 8) + 8, (currentRow * 8) + 8);
+				do Screen.drawRectangle(currentColumn * 8, currentRow * 8, (currentColumn * 8) + 7, (currentRow * 8) + 7);
 				let currentColumn = currentColumn + 1;
 			}
 			let currentRow = currentRow + 1;

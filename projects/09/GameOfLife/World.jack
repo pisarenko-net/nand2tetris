@@ -116,6 +116,9 @@ class World {
 		let currentValue = ~currentValue;
 		let row[columnNumber] = currentValue;
 
+		do Screen.setColor(currentValue);
+		do Screen.drawRectangle(columnNumber * 8, rowNumber * 8, (columnNumber * 8) + 7, (rowNumber * 8) + 7);
+
 		return;
 	}
 

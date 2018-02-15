@@ -17,8 +17,11 @@ class Main {
 		do world.toggleCell(2, 2);		
 
 		while (true) {
-			//do Output.printString("one generation went by");
-			do Game.display(world);
+			//do Output.moveCursor(15, 3);
+			//do Output.printString("redraw ");
+			//do Game.display(world);
+			//do Output.moveCursor(15, 3);
+			//do Output.printString("compute");
 			do world.transformToNextGeneration();
 			//do Sys.wait(2000);
 		}

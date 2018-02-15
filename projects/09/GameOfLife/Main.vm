@@ -47,9 +47,6 @@ not
 not
 if-goto WHILE_END0
 push local 0
-call Game.display 1
-pop temp 0
-push local 0
 call World.transformToNextGeneration 1
 pop temp 0
 goto WHILE_EXP0
