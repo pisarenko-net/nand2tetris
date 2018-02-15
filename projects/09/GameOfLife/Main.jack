@@ -4,9 +4,9 @@ class Main {
 
 		let world = World.new();
 
-		do Game.spawnVerticalOscillator(world, 24, 24);
-		do Game.spawnVerticalOscillator(world, 29, 51);
-		do Game.spawnSpaceship(world, 2, 2);
+		do Game.displayWelcomeScreen();
+		do Game.createLife(world);
+		do Game.displayInstructions();
 
 		while (true) {
 			do world.transformToNextGeneration();

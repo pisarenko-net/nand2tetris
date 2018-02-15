@@ -1,4 +1,32 @@
 class Game {
+	function void displayWelcomeScreen() {
+		var char key;
+
+		do Output.moveCursor(6, 12);
+		do Output.printString("Game of Life Simulation");
+		do Output.moveCursor(8, 16);
+		do Output.printString("Press 's' to start.");
+
+		while (~(key = 83)) {
+			let key = Keyboard.keyPressed();
+		}
+
+		do Output.moveCursor(6, 12);
+		do Output.printString("                       ");
+		do Output.moveCursor(8, 16);
+		do Output.printString("                   ");
+
+		return;
+	}
+
+	function void createLife(World world) {
+		do Game.spawnVerticalOscillator(world, 24, 24);
+		do Game.spawnVerticalOscillator(world, 29, 51);
+		do Game.spawnSpaceship(world, 2, 2);
+		do world.transformToNextGeneration();
+		return;
+	}
+
 	function void spawnVerticalOscillator(World world, int row, int column) {
 		do world.toggleCell(row, column);
 		do world.toggleCell(row+1, column);
@@ -12,6 +40,42 @@ class Game {
 		do world.toggleCell(row+1, column);
 		do world.toggleCell(row+2, column+2);
 		do world.toggleCell(row+2, column+1);
+		return;
+	}
+
+	function void displayInstructions() {
+		var char key;
+
+		do Output.moveCursor(2, 8);
+		do Output.printString("Entering World editor. Instructions:");
+		do Output.moveCursor(4, 10);
+		do Output.printString("> use arrow keys to move cursor around.");
+		do Output.moveCursor(6, 10);
+		do Output.printString("> press 'space' or 'enter' to toggle a cell state.");
+		do Output.moveCursor(10, 8);
+		do Output.printString("Press 'e' to begin editing.");
+		do Output.moveCursor(12, 8);
+		do Output.printString("When done, press 's' to begin simulation.");
+		do Output.moveCursor(16, 8);
+		do Output.printString("Visit http://www.conwaylife.com/wiki/Main_Page");
+
+		while (~(key = 69)) {
+			let key = Keyboard.keyPressed();
+		}
+
+		do Output.moveCursor(2, 8);
+		do Output.printString("                                    ");
+		do Output.moveCursor(4, 10);
+		do Output.printString("                                       ");
+		do Output.moveCursor(6, 10);
+		do Output.printString("                                                  ");
+		do Output.moveCursor(10, 8);
+		do Output.printString("                           ");
+		do Output.moveCursor(12, 8);
+		do Output.printString("                                         ");
+		do Output.moveCursor(16, 8);
+		do Output.printString("                                              ");
+
 		return;
 	}
 }

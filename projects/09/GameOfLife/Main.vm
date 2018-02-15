@@ -1,24 +1,23 @@
 function Main.main 1
 call World.new 0
 pop local 0
-push local 0
-push constant 24
-push constant 24
-call Game.spawnVerticalOscillator 3
+call Game.displayWelcomeScreen 0
 pop temp 0
 push local 0
-push constant 29
-push constant 51
-call Game.spawnVerticalOscillator 3
+call Game.createLife 1
 pop temp 0
-push local 0
-push constant 2
-push constant 2
-call Game.spawnSpaceship 3
+call Game.displayInstructions 0
 pop temp 0
+label WHILE_EXP0
+push constant 0
+not
+not
+if-goto WHILE_END0
 push local 0
 call World.transformToNextGeneration 1
 pop temp 0
+goto WHILE_EXP0
+label WHILE_END0
 push local 0
 call World.dispose 1
 pop temp 0
