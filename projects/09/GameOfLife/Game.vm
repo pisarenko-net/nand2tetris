@@ -19,7 +19,7 @@ if-goto WHILE_END1
 push argument 0
 push local 0
 push local 1
-call World.getCell 3
+call World.isCellAlive 3
 pop local 2
 push local 2
 if-goto IF_TRUE0

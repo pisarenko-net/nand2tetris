@@ -3,6 +3,7 @@ class Game {
 		return;
 	}
 
+	// this can be made faster by bypassing Screen and accessing memory directly
 	function void display(World world) {
 		var int currentRow, currentColumn;
 		var boolean currentValue;
@@ -10,7 +11,7 @@ class Game {
 		while (currentRow < 63) {
 			let currentColumn = 0;
 			while (currentColumn < 127) {
-				let currentValue = world.getCell(currentRow, currentColumn);
+				let currentValue = world.isCellAlive(currentRow, currentColumn);
 				if (currentValue) {
 					do Screen.setColor(true);
 				} else {

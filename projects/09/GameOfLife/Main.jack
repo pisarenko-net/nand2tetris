@@ -4,11 +4,16 @@ class Main {
 
 		let world = World.new();
 
+		// oscillator
+		do world.toggleCell(24, 24);
+		do world.toggleCell(25, 24);
+		do world.toggleCell(26, 24);
+
 		while (true) {
-			do world.transformToNextGeneration();
 			//do Output.printString("one generation went by");
 			do Game.display(world);
-			do Sys.wait(2000);
+			do world.transformToNextGeneration();
+			//do Sys.wait(2000);
 		}
 
 		do world.dispose();

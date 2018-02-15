@@ -1,19 +1,31 @@
 function Main.main 1
 call World.new 0
 pop local 0
+push local 0
+push constant 24
+push constant 24
+call World.toggleCell 3
+pop temp 0
+push local 0
+push constant 25
+push constant 24
+call World.toggleCell 3
+pop temp 0
+push local 0
+push constant 26
+push constant 24
+call World.toggleCell 3
+pop temp 0
 label WHILE_EXP0
 push constant 0
 not
 not
 if-goto WHILE_END0
 push local 0
-call World.transformToNextGeneration 1
-pop temp 0
-push local 0
 call Game.display 1
 pop temp 0
-push constant 2000
-call Sys.wait 1
+push local 0
+call World.transformToNextGeneration 1
 pop temp 0
 goto WHILE_EXP0
 label WHILE_END0
