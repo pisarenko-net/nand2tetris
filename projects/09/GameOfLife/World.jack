@@ -49,7 +49,6 @@ class World {
 		var List pendingChanges, pendingChangesPrevious;
 		var int currentRow, currentColumn;
 		var Array row;
-		var boolean areChangesPending, shouldCellToggle;
 
 		let currentRow = 0;
 
@@ -57,9 +56,7 @@ class World {
 		let pendingChangesPrevious = List.new(-1, null);
 
 		while (currentRow < 64) {
-			let areChangesPending = areChangesPending(pendingChangesPrevious);
-
-			if (areChangesPending) {
+			if (areChangesPending(pendingChangesPrevious)) {
 				do applyChanges(currentRow - 2, pendingChangesPrevious);
 			}
 			do pendingChangesPrevious.dispose();
@@ -70,8 +67,7 @@ class World {
 			let currentColumn = 0;
 
 			while (currentColumn < 128) {
-				let shouldCellToggle = shouldCellToggle(currentRow, currentColumn);
-				if (shouldCellToggle) {
+				if (shouldCellToggle(currentRow, currentColumn)) {
 					let pendingChanges = List.new(currentColumn, pendingChanges);
 				}
 				let currentColumn = currentColumn + 1;
@@ -89,10 +85,7 @@ class World {
 	}
 
 	method boolean areChangesPending(List changedColumns) {
-		var boolean isPendingListEmpty;
-		let isPendingListEmpty = changedColumns.isEmpty();
-
-		if (isPendingListEmpty) {
+		if (changedColumns.isEmpty()) {
 			return false;
 		} else {
 			return true;
@@ -115,13 +108,10 @@ class World {
 	}
 
 	method boolean shouldCellToggle(int row, int column) {
-		var boolean isAlive;
 		var int neighbours;
+		let neighbours = countNeighbours(row, column);
 
-		let isAlive = isCellAlive(row, column);
-		let neighbours = getNeighbours(row, column);
-
-		if (isAlive) {
+		if (isCellAlive(row, column)) {
 			if ((neighbours < 2) | (neighbours > 3)) {
 				return true;
 			} else {
@@ -136,7 +126,7 @@ class World {
 		}
 	}
 
-	method int getNeighbours(int row, int column) {
+	method int countNeighbours(int row, int column) {
 		var int neighbours;
 		let neighbours = 0;
 

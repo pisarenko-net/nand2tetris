@@ -96,7 +96,7 @@ goto WHILE_EXP0
 label WHILE_END0
 push constant 0
 return
-function World.transformToNextGeneration 7
+function World.transformToNextGeneration 5
 push argument 0
 pop pointer 0
 push constant 0
@@ -120,8 +120,6 @@ if-goto WHILE_END0
 push pointer 0
 push local 1
 call World.areChangesPending 2
-pop local 5
-push local 5
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
@@ -161,8 +159,6 @@ push pointer 0
 push local 2
 push local 3
 call World.shouldCellToggle 3
-pop local 6
-push local 6
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
@@ -205,13 +201,11 @@ call List.dispose 1
 pop temp 0
 push constant 0
 return
-function World.areChangesPending 1
+function World.areChangesPending 0
 push argument 0
 pop pointer 0
 push argument 1
 call List.isEmpty 1
-pop local 0
-push local 0
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
@@ -254,27 +248,25 @@ goto WHILE_EXP0
 label WHILE_END0
 push constant 0
 return
-function World.shouldCellToggle 2
+function World.shouldCellToggle 1
 push argument 0
 pop pointer 0
 push pointer 0
 push argument 1
 push argument 2
-call World.isCellAlive 3
+call World.countNeighbours 3
 pop local 0
 push pointer 0
 push argument 1
 push argument 2
-call World.getNeighbours 3
-pop local 1
-push local 0
+call World.isCellAlive 3
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push local 1
+push local 0
 push constant 2
 lt
-push local 1
+push local 0
 push constant 3
 gt
 or
@@ -291,7 +283,7 @@ return
 label IF_END1
 goto IF_END0
 label IF_FALSE0
-push local 1
+push local 0
 push constant 3
 eq
 if-goto IF_TRUE2
@@ -306,7 +298,7 @@ push constant 0
 return
 label IF_END2
 label IF_END0
-function World.getNeighbours 1
+function World.countNeighbours 1
 push argument 0
 pop pointer 0
 push constant 0
