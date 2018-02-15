@@ -248,6 +248,34 @@ goto WHILE_EXP0
 label WHILE_END0
 push constant 0
 return
+function World.toggleCell 2
+push argument 0
+pop pointer 0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 1
+push argument 2
+push local 1
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+not
+pop local 0
+push argument 2
+push local 1
+add
+push local 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return
 function World.shouldCellToggle 1
 push argument 0
 pop pointer 0
@@ -298,6 +326,23 @@ push constant 0
 return
 label IF_END2
 label IF_END0
+function World.isCellAlive 2
+push argument 0
+pop pointer 0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
+pop argument 1
+push argument 2
+push argument 1
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+return
 function World.countNeighbours 1
 push argument 0
 pop pointer 0
@@ -462,49 +507,4 @@ pop local 0
 label IF_FALSE9
 label IF_FALSE6
 push local 0
-return
-function World.isCellAlive 2
-push argument 0
-pop pointer 0
-push argument 1
-push this 0
-add
-pop pointer 1
-push that 0
-pop argument 1
-push argument 2
-push argument 1
-add
-pop pointer 1
-push that 0
-pop local 1
-push local 1
-return
-function World.toggleCell 2
-push argument 0
-pop pointer 0
-push argument 1
-push this 0
-add
-pop pointer 1
-push that 0
-pop local 1
-push argument 2
-push local 1
-add
-pop pointer 1
-push that 0
-pop local 0
-push local 0
-not
-pop local 0
-push argument 2
-push local 1
-add
-push local 0
-pop temp 0
-pop pointer 1
-push temp 0
-pop that 0
-push constant 0
 return

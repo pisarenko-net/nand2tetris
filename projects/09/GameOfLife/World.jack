@@ -107,6 +107,18 @@ class World {
 		return;
 	}
 
+	method void toggleCell(int rowNumber, int columnNumber) {
+		var boolean currentValue;
+		var Array row;
+
+		let row = cells[rowNumber];
+		let currentValue = row[columnNumber];
+		let currentValue = ~currentValue;
+		let row[columnNumber] = currentValue;
+
+		return;
+	}
+
 	method boolean shouldCellToggle(int row, int column) {
 		var int neighbours;
 		let neighbours = countNeighbours(row, column);
@@ -124,6 +136,14 @@ class World {
 				return false;
 			}
 		}
+	}
+
+	method boolean isCellAlive(int row, int column) {
+		var Array row;
+		var boolean currentValue;
+		let row = cells[row];
+		let currentValue = row[column];
+		return currentValue;
 	}
 
 	method int countNeighbours(int row, int column) {
@@ -168,25 +188,5 @@ class World {
 		}
 
 		return neighbours;
-	}
-
-	method boolean isCellAlive(int row, int column) {
-		var Array row;
-		var boolean currentValue;
-		let row = cells[row];
-		let currentValue = row[column];
-		return currentValue;
-	}
-
-	method void toggleCell(int rowNumber, int columnNumber) {
-		var boolean currentValue;
-		var Array row;
-
-		let row = cells[rowNumber];
-		let currentValue = row[columnNumber];
-		let currentValue = ~currentValue;
-		let row[columnNumber] = currentValue;
-
-		return;
 	}
 }

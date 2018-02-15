@@ -9,6 +9,13 @@ class Main {
 		do world.toggleCell(25, 24);
 		do world.toggleCell(26, 24);
 
+		// spaceship
+		do world.toggleCell(0, 3);
+		do world.toggleCell(1, 3);
+		do world.toggleCell(1, 1);
+		do world.toggleCell(2, 3);
+		do world.toggleCell(2, 2);		
+
 		while (true) {
 			//do Output.printString("one generation went by");
 			do Game.display(world);
