@@ -1,0 +1,3 @@
+function Editor.start 0
+push constant 0
+return

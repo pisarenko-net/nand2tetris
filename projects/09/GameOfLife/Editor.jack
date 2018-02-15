@@ -1,0 +1,5 @@
+class Editor {
+	function void start(World world) {
+		return;
+	}
+}

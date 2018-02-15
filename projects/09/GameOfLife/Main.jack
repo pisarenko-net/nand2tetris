@@ -8,6 +8,8 @@ class Main {
 		do Game.createLife(world);
 		do Game.displayInstructions();
 
+		do Editor.start(world);
+
 		while (true) {
 			do world.transformToNextGeneration();
 		}

@@ -8,6 +8,9 @@ call Game.createLife 1
 pop temp 0
 call Game.displayInstructions 0
 pop temp 0
+push local 0
+call Editor.start 1
+pop temp 0
 label WHILE_EXP0
 push constant 0
 not
