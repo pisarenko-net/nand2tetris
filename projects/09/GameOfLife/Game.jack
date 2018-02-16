@@ -23,6 +23,8 @@ class Game {
 		do Game.spawnVerticalOscillator(world, 24, 24);
 		do Game.spawnVerticalOscillator(world, 29, 51);
 		do Game.spawnSpaceship(world, 2, 2);
+		do Game.spawnLWSS(world, 20, 58);
+		do Game.spawnPentadecathlon(world, 2, 52);
 		do world.transformToNextGeneration();
 		return;
 	}
@@ -40,6 +42,45 @@ class Game {
 		do world.toggleCell(row+1, column);
 		do world.toggleCell(row+2, column+2);
 		do world.toggleCell(row+2, column+1);
+		return;
+	}
+
+	function void spawnLWSS(World world, int row, int column) {
+		do world.toggleCell(row, column+1);
+		do world.toggleCell(row, column+4);
+		do world.toggleCell(row+1, column);
+		do world.toggleCell(row+2, column);
+		do world.toggleCell(row+2, column+4);
+		do world.toggleCell(row+3, column);
+		do world.toggleCell(row+3, column+1);
+		do world.toggleCell(row+3, column+2);
+		do world.toggleCell(row+3, column+3);
+		return;
+	}
+
+	function void spawnPentadecathlon(World world, int row, int column) {
+		do world.toggleCell(row, column+1);
+		do world.toggleCell(row+1, column+1);
+		do world.toggleCell(row+2, column);
+		do world.toggleCell(row+2, column+1);
+		do world.toggleCell(row+2, column+2);
+
+		do world.toggleCell(row+5, column);
+		do world.toggleCell(row+5, column+1);
+		do world.toggleCell(row+5, column+2);
+		do world.toggleCell(row+6, column+1);
+		do world.toggleCell(row+7, column+1);
+		do world.toggleCell(row+8, column+1);
+		do world.toggleCell(row+9, column+1);
+		do world.toggleCell(row+10, column);
+		do world.toggleCell(row+10, column+1);
+		do world.toggleCell(row+10, column+2);
+
+		do world.toggleCell(row+13, column);
+		do world.toggleCell(row+13, column+1);
+		do world.toggleCell(row+13, column+2);
+		do world.toggleCell(row+14, column+1);
+		do world.toggleCell(row+15, column+1);
 		return;
 	}
 

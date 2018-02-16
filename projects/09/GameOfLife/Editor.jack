@@ -46,10 +46,6 @@ class Editor {
 			let key = Keyboard.keyPressed();
 		}
 
-		// check keyboard output
-		// if 's' entered quit the loop
-		// if arrow enterted move the cursor
-		// if enter or space pressed toggle cell state
 		return;
 	}
 

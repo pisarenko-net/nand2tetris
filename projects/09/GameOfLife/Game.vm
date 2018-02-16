@@ -229,6 +229,16 @@ push constant 2
 call Game.spawnSpaceship 3
 pop temp 0
 push argument 0
+push constant 20
+push constant 58
+call Game.spawnLWSS 3
+pop temp 0
+push argument 0
+push constant 2
+push constant 52
+call Game.spawnPentadecathlon 3
+pop temp 0
+push argument 0
 call World.transformToNextGeneration 1
 pop temp 0
 push constant 0
@@ -291,6 +301,253 @@ pop temp 0
 push argument 0
 push argument 1
 push constant 2
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push constant 0
+return
+function Game.spawnLWSS 0
+push argument 0
+push argument 1
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push argument 2
+push constant 4
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+push constant 4
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 3
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 3
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 3
+add
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 3
+add
+push argument 2
+push constant 3
+add
+call World.toggleCell 3
+pop temp 0
+push constant 0
+return
+function Game.spawnPentadecathlon 0
+push argument 0
+push argument 1
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 5
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 5
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 5
+add
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 6
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 7
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 8
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 9
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 10
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 10
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 10
+add
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 13
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 13
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 13
+add
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 14
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 15
 add
 push argument 2
 push constant 1
