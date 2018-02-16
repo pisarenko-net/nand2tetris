@@ -51,7 +51,7 @@ class Game {
 		do Output.moveCursor(4, 10);
 		do Output.printString("> use arrow keys to move cursor around.");
 		do Output.moveCursor(6, 10);
-		do Output.printString("> press 'space' or 'enter' to toggle a cell state.");
+		do Output.printString("> press 'space' to toggle a cell state.");
 		do Output.moveCursor(10, 8);
 		do Output.printString("Press 'e' to begin editing.");
 		do Output.moveCursor(12, 8);
@@ -68,7 +68,7 @@ class Game {
 		do Output.moveCursor(4, 10);
 		do Output.printString("                                       ");
 		do Output.moveCursor(6, 10);
-		do Output.printString("                                                  ");
+		do Output.printString("                                      ");
 		do Output.moveCursor(10, 8);
 		do Output.printString("                           ");
 		do Output.moveCursor(12, 8);

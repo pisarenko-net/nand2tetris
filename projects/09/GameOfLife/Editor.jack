@@ -40,6 +40,7 @@ class Editor {
 			}
 			// enter or space
 			if ((key = 13) | (key = 32)) {
+				do world.toggleCell(row, column);
 				do moveCursorAfterChange();
 			}
 			let key = Keyboard.keyPressed();
@@ -102,7 +103,7 @@ class Editor {
 		if (~(row = 31)) {
 			do moveCursorDown();
 		} else {
-			if (~(column = 15)) {
+			if (~(column = 63)) {
 				do moveCursorRight();
 			} else {
 				if (~(column = 0)) {
