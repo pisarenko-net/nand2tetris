@@ -61,6 +61,7 @@ class Editor {
 		do Screen.drawRectangle(column * 8, row * 8, (column * 8) + 7, (row * 8) + 7);
 		do Sys.wait(100);
 
+		// restore actual value on the screen
 		do Screen.setColor(currentValue);
 		do Screen.drawRectangle(column * 8, row * 8, (column * 8) + 7, (row * 8) + 7);
 
