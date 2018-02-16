@@ -215,6 +215,16 @@ return
 function Game.createLife 0
 push argument 0
 push constant 24
+push constant 2
+call Game.spawnBeehive 3
+pop temp 0
+push argument 0
+push constant 27
+push constant 28
+call Game.spawnBeehive 3
+pop temp 0
+push argument 0
+push constant 24
 push constant 24
 call Game.spawnVerticalOscillator 3
 pop temp 0
@@ -229,8 +239,28 @@ push constant 2
 call Game.spawnSpaceship 3
 pop temp 0
 push argument 0
+push constant 10
+push constant 25
+call Game.spawnSpaceship 3
+pop temp 0
+push argument 0
+push constant 10
+push constant 19
+call Game.spawnSpaceship 3
+pop temp 0
+push argument 0
+push constant 10
+push constant 13
+call Game.spawnSpaceship 3
+pop temp 0
+push argument 0
 push constant 20
-push constant 58
+push constant 59
+call Game.spawnLWSS 3
+pop temp 0
+push argument 0
+push constant 25
+push constant 42
 call Game.spawnLWSS 3
 pop temp 0
 push argument 0
@@ -239,7 +269,226 @@ push constant 52
 call Game.spawnPentadecathlon 3
 pop temp 0
 push argument 0
+push constant 12
+push constant 38
+call Game.spawnBeacon 3
+pop temp 0
+push argument 0
+push constant 0
+push constant 58
+call Game.spawnBeacon 3
+pop temp 0
+push argument 0
+push constant 14
+push constant 5
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 28
+push constant 16
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 24
+push constant 12
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 19
+push constant 12
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 19
+push constant 15
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 19
+push constant 18
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 19
+push constant 21
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 19
+push constant 24
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 19
+push constant 27
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 19
+push constant 31
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 19
+push constant 34
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
+push constant 19
+push constant 37
+call Game.spawnBlock 3
+pop temp 0
+push argument 0
 call World.transformToNextGeneration 1
+pop temp 0
+push constant 0
+return
+function Game.spawnBeehive 0
+push argument 0
+push argument 1
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+push constant 3
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push constant 0
+return
+function Game.spawnBlock 0
+push argument 0
+push argument 1
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push constant 0
+return
+function Game.spawnBeacon 0
+push argument 0
+push argument 1
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 1
+add
+push argument 2
+push constant 1
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 2
+add
+push argument 2
+push constant 3
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 3
+add
+push argument 2
+push constant 2
+add
+call World.toggleCell 3
+pop temp 0
+push argument 0
+push argument 1
+push constant 3
+add
+push argument 2
+push constant 3
+add
+call World.toggleCell 3
 pop temp 0
 push constant 0
 return

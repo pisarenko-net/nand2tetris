@@ -20,12 +20,62 @@ class Game {
 	}
 
 	function void createLife(World world) {
+		do Game.spawnBeehive(world, 24, 2);
+		do Game.spawnBeehive(world, 27, 28);
 		do Game.spawnVerticalOscillator(world, 24, 24);
 		do Game.spawnVerticalOscillator(world, 29, 51);
 		do Game.spawnSpaceship(world, 2, 2);
-		do Game.spawnLWSS(world, 20, 58);
+		do Game.spawnSpaceship(world, 10, 25);
+		do Game.spawnSpaceship(world, 10, 19);
+		do Game.spawnSpaceship(world, 10, 13);
+		do Game.spawnLWSS(world, 20, 59);
+		do Game.spawnLWSS(world, 25, 42);
 		do Game.spawnPentadecathlon(world, 2, 52);
+		do Game.spawnBeacon(world, 12, 38);
+		do Game.spawnBeacon(world, 0, 58);
+		do Game.spawnBlock(world, 14, 5);
+		do Game.spawnBlock(world, 28, 16);
+		do Game.spawnBlock(world, 24, 12);
+		do Game.spawnBlock(world, 19, 12);
+		do Game.spawnBlock(world, 19, 15);
+		do Game.spawnBlock(world, 19, 18);
+		do Game.spawnBlock(world, 19, 21);
+		do Game.spawnBlock(world, 19, 24);
+		do Game.spawnBlock(world, 19, 27);
+		do Game.spawnBlock(world, 19, 31);
+		do Game.spawnBlock(world, 19, 34);
+		do Game.spawnBlock(world, 19, 37);
 		do world.transformToNextGeneration();
+		return;
+	}
+
+	function void spawnBeehive(World world, int row, int column) {
+		do world.toggleCell(row, column+1);
+		do world.toggleCell(row, column+2);
+		do world.toggleCell(row+1, column);
+		do world.toggleCell(row+1, column+3);
+		do world.toggleCell(row+2, column+1);
+		do world.toggleCell(row+2, column+2);
+		return;
+	}
+
+	function void spawnBlock(World world, int row, int column) {
+		do world.toggleCell(row, column);
+		do world.toggleCell(row, column+1);
+		do world.toggleCell(row+1, column);
+		do world.toggleCell(row+1, column+1);
+		return;
+	}
+
+	function void spawnBeacon(World world, int row, int column) {
+		do world.toggleCell(row, column);
+		do world.toggleCell(row, column+1);
+		do world.toggleCell(row+1, column);
+		do world.toggleCell(row+1, column+1);
+		do world.toggleCell(row+2, column+2);
+		do world.toggleCell(row+2, column+3);
+		do world.toggleCell(row+3, column+2);
+		do world.toggleCell(row+3, column+3);
 		return;
 	}
 
