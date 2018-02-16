@@ -1,5 +1,117 @@
 class Editor {
-	function void start(World world) {
+	field int row, column;
+	field World world;
+
+	constructor Editor new(World worldArgument) {
+		let row = 15;
+		let column = 31;
+		let world = worldArgument;
+		return this;
+	}
+
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method void start() {
+		var char key;
+
+		let key = 0;
+
+		while (~(key = 83)) {
+			do blinkCursor();
+
+			// up
+			if (key = 131) {
+				do moveCursorUp();
+			}
+			// down
+			if (key = 133) {
+				do moveCursorDown();
+			}
+			// left
+			if (key = 130) {
+				do moveCursorLeft();
+			}
+			// right
+			if (key = 132) {
+				do moveCursorRight();
+			}
+			// enter or space
+			if ((key = 13) | (key = 32)) {
+				do moveCursorAfterChange();
+			}
+			let key = Keyboard.keyPressed();
+		}
+
+		// check keyboard output
+		// if 's' entered quit the loop
+		// if arrow enterted move the cursor
+		// if enter or space pressed toggle cell state
+		return;
+	}
+
+	method void blinkCursor() {
+		var boolean currentValue;
+		let currentValue = world.isCellAlive(row, column);
+
+		do Screen.setColor(false);
+		do Screen.drawRectangle(column * 8, row * 8, (column * 8) + 7, (row * 8) + 7);
+		do Sys.wait(100);
+
+		do Screen.setColor(true);
+		do Screen.drawRectangle(column * 8, row * 8, (column * 8) + 7, (row * 8) + 7);
+		do Sys.wait(100);
+
+		do Screen.setColor(currentValue);
+		do Screen.drawRectangle(column * 8, row * 8, (column * 8) + 7, (row * 8) + 7);
+
+		return;
+	}
+
+	method void moveCursorLeft() {
+		if (~(column = 0)) {
+			let column = column - 1;
+		}
+		return;
+	}
+
+	method void moveCursorRight() {
+		if (~(column = 63)) {
+			let column = column + 1;
+		}
+		return;
+	}
+
+	method void moveCursorUp() {
+		if (~(row = 0)) {
+			let row = row - 1;
+		}
+		return;
+	}
+
+	method void moveCursorDown() {
+		if (~(row = 31)) {
+			let row = row + 1;
+		}
+		return;
+	}
+
+	method void moveCursorAfterChange() {
+		if (~(row = 31)) {
+			do moveCursorDown();
+		} else {
+			if (~(column = 15)) {
+				do moveCursorRight();
+			} else {
+				if (~(column = 0)) {
+					do moveCursorLeft();
+				} else {
+					do moveCursorUp();
+				}
+			}
+		}
 		return;
 	}
 }

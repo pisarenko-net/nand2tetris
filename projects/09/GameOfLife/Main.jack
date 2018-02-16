@@ -1,14 +1,16 @@
 class Main {
 	function void main() {
 		var World world;
+		var Editor editor;
 
 		let world = World.new();
+		let editor = Editor.new(world);
 
 		do Game.displayWelcomeScreen();
 		do Game.createLife(world);
 		do Game.displayInstructions();
 
-		do Editor.start(world);
+		do editor.start();
 
 		while (true) {
 			do world.transformToNextGeneration();

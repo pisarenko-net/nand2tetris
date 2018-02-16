@@ -1,6 +1,9 @@
-function Main.main 1
+function Main.main 2
 call World.new 0
 pop local 0
+push local 0
+call Editor.new 1
+pop local 1
 call Game.displayWelcomeScreen 0
 pop temp 0
 push local 0
@@ -8,7 +11,7 @@ call Game.createLife 1
 pop temp 0
 call Game.displayInstructions 0
 pop temp 0
-push local 0
+push local 1
 call Editor.start 1
 pop temp 0
 label WHILE_EXP0
