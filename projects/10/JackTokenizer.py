@@ -3,10 +3,10 @@ import re
 
 IGNORED_EXPRESSIONS = [
 	# comments
-	(None, re.compile(r'//[^\n]*')),
-	(None, re.compile(r'/\*.*?\*/', flags=re.MULTILINE|re.DOTALL)),
+	(None, re.compile(r'(//[^\n]*)')),
+	(None, re.compile(r'(/\*.*?\*/)', flags=re.MULTILINE|re.DOTALL)),
 	# whitespace
-	(None, re.compile(r'[ \n\t]+'))
+	(None, re.compile(r'([\s\n\t]+)'))
 ]
 
 KEYWORDS = ['class', 'constructor', 'function', 'method', 'field', 'static', 'var',
@@ -14,17 +14,14 @@ KEYWORDS = ['class', 'constructor', 'function', 'method', 'field', 'static', 'va
 	        'do', 'if', 'else', 'while', 'return']
 KEYWORD_EXPRESSIONS = [('KEYWORD', re.compile('(%s)' % keyword)) for keyword in KEYWORDS]
 
-SYMBOLS_EXPRESSION = ('SYMBOL', re.compile(r'([\{\}\(\)\[\]\.,;\+\-\*/&\|<>=_])'))
+SYMBOLS_EXPRESSION = ('SYMBOL', re.compile(r'([\{\}\(\)\[\]\.,;\+\-\*/&\|<>=_~])'))
+INT_CONST_EXPRESSION = ('INT_CONST', re.compile(r'(\d+)'))
+STRING_CONST_EXPRESSION = ('STRING_CONST', re.compile(r'"(.*?)"'))
+IDENTIFIER_EXPRESSION = ('IDENTIFIER', re.compile(r'([a-zA-Z_]\w*)'))
 
-INTEGER_CONSTANT_EXPRESSION = ''
-STRING_CONSTANT_EXPRESSION = ''
-
-IDENTIFIER_EXPRESSION = ('IDENTIFIER', re.compile(r'(\w+)'))
-
-TOKEN_EXPRESSIONS = IGNORED_EXPRESSIONS + KEYWORD_EXPRESSIONS + [SYMBOLS_EXPRESSION, IDENTIFIER_EXPRESSION]
-# TOKEN_EXPRESSIONS.append(SYMBOLS_EXPRESSION)
-# TOKEN_EXPRESSIONS.append(IDENTIFIER_EXPRESSION)
-# TOKEN_EXPRESSIONS.append(IDENTIFIER_EXPRESSION)
+TOKEN_EXPRESSIONS = IGNORED_EXPRESSIONS + KEYWORD_EXPRESSIONS + \
+                    [SYMBOLS_EXPRESSION, INT_CONST_EXPRESSION,
+                     STRING_CONST_EXPRESSION, IDENTIFIER_EXPRESSION] 
 
 
 def tokenize(input_lines):
