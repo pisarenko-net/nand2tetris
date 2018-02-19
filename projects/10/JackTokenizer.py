@@ -9,50 +9,28 @@ IGNORED_EXPRESSIONS = [
 	(None, re.compile(r'[ \n\t]+'))
 ]
 
-KEYWORD_EXPRESSIONS = [
-	('class', re.compile('class')),
-	('constructor', re.compile('constructor')),
-	('function', re.compile('function')),
-	('method', re.compile('method')),
-	('field', re.compile('field')),
-	('static', re.compile('static')),
-	('var', re.compile('var')),
-	('int', re.compile('int')),
-	('char', re.compile('char')),
-	('boolean', re.compile('boolean')),
-	('void', re.compile('void')),
-	('true', re.compile('true')),
-	('false', re.compile('false')),
-	('null', re.compile('null')),
-	('this', re.compile('this')),
-	('let', re.compile('let')),
-	('do', re.compile('do')),
-	('if', re.compile('if')),
-	('else', re.compile('else')),
-	('while', re.compile('while')),
-	('return', re.compile('return'))
-]
-
 KEYWORDS = ['class', 'constructor', 'function', 'method', 'field', 'static', 'var',
 	        'int', 'char', 'boolean', 'void', 'true', 'false', 'null', 'this', 'let',
 	        'do', 'if', 'else', 'while', 'return']
-SYMBOLS = '{}()[].,;+-*/&|<>=_'
+KEYWORD_EXPRESSIONS = [('KEYWORD', re.compile('(%s)' % keyword)) for keyword in KEYWORDS]
 
-SYMBOL_EXPRESSIONS = [
-	('{', re.compile(r'\{')),
-]
+SYMBOLS_EXPRESSION = ('SYMBOL', re.compile(r'([\{\}\(\)\[\]\.,;\+\-\*/&\|<>=_])'))
 
-TOKEN_EXPRESSIONS = IGNORED_EXPRESSIONS + KEYWORD_EXPRESSIONS + SYMBOL_EXPRESSIONS + [
-	('METHOD', re.compile(r'method')),
-	('DO', re.compile(r'do')),
-]
+INTEGER_CONSTANT_EXPRESSION = ''
+STRING_CONSTANT_EXPRESSION = ''
+
+IDENTIFIER_EXPRESSION = ('IDENTIFIER', re.compile(r'(\w+)'))
+
+TOKEN_EXPRESSIONS = IGNORED_EXPRESSIONS + KEYWORD_EXPRESSIONS + [SYMBOLS_EXPRESSION, IDENTIFIER_EXPRESSION]
+# TOKEN_EXPRESSIONS.append(SYMBOLS_EXPRESSION)
+# TOKEN_EXPRESSIONS.append(IDENTIFIER_EXPRESSION)
+# TOKEN_EXPRESSIONS.append(IDENTIFIER_EXPRESSION)
 
 
 def tokenize(input_lines):
 	content = ''.join(input_lines)
 	tokens = []
 	current_position = 0
-	print(content)
 
 	while current_position < len(content):
 		match = None
@@ -60,11 +38,9 @@ def tokenize(input_lines):
 		for token_name, token_expression in TOKEN_EXPRESSIONS:
 			match = token_expression.match(content, current_position)
 			if match:
-				print(match.group(0))
 				if token_name:
-					tokens.append(token_name)
+					tokens.append((token_name, match.group(1)))
 				current_position = match.end(0)
 				break
-			print(tokens, current_position)
 
 	return tokens
