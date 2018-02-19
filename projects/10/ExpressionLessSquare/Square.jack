@@ -3,7 +3,11 @@
 // by Nisan and Schocken, MIT Press.
 /// File name: projects/10/ExpressionLessSquare/Square.jack
 
-/** Expressionless version of projects/10/Square/Square.jack. */
+/** Expressionless version of projects/10/Square/Square.jack.
+
+  multi line
+  shit
+yahhe*/
 
 class Square {
 
@@ -97,3 +101,5 @@ class Square {
       return;
    }
 }  
+
+/* fuck this yeah */
