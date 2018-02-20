@@ -19,11 +19,17 @@ class Square {
       var boolean yes;
       var int aaa, bbb;
 
-      while() {}
-
-      if () {
-      } else {
-         while() {}
+      while(true) {
+         do canz(123, 234);
       }
+
+      if (true) {
+      } else {
+         while(true) {
+            let aaa = 14;
+         }
+      }
+
+      return mem;
    }
 }
