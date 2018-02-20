@@ -2,6 +2,7 @@ import os
 import sys
 
 from JackTokenizer import tokenize
+from JackCompilationEngine import CompilationEngine
 
 
 def main(input_path):
@@ -9,7 +10,10 @@ def main(input_path):
 		print('PROCESSING %s' % input_file_path)
 		with open(input_file_path) as input_file:
 			tokens = tokenize(input_file.readlines())
+			compilation_engine = CompilationEngine(tokens)
+			compiled_class = compilation_engine.compile_class()
 			print(tokens)
+			print(compiled_class)
 
 
 def _get_source_files(input_path):
