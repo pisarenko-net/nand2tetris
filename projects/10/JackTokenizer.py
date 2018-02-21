@@ -15,8 +15,8 @@ KEYWORDS = ['class', 'constructor', 'function', 'method', 'field', 'static', 'va
 KEYWORD_EXPRESSIONS = [('keyword', re.compile('(%s)' % keyword)) for keyword in KEYWORDS]
 
 SYMBOLS_EXPRESSION = ('symbol', re.compile(r'([\{\}\(\)\[\]\.,;\+\-\*/&\|<>=_~])'))
-INT_CONST_EXPRESSION = ('int_const', re.compile(r'(\d+)'))
-STRING_CONST_EXPRESSION = ('string_const', re.compile(r'"(.*?)"'))
+INT_CONST_EXPRESSION = ('integerConstant', re.compile(r'(\d+)'))
+STRING_CONST_EXPRESSION = ('stringConstant', re.compile(r'"(.*?)"'))
 IDENTIFIER_EXPRESSION = ('identifier', re.compile(r'([a-zA-Z_]\w*)'))
 
 TOKEN_EXPRESSIONS = IGNORED_EXPRESSIONS + KEYWORD_EXPRESSIONS + \
