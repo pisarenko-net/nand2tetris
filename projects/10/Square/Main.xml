@@ -1,17 +1,20 @@
 <class>
   <keyword> class </keyword>
   <identifier> Main </identifier>
+CLASS DETECTED
   <symbol> { </symbol>
   <classVarDec>
     <keyword> static </keyword>
     <keyword> boolean </keyword>
     <identifier> test </identifier>
+True static boolean 0
     <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
     <keyword> function </keyword>
     <keyword> void </keyword>
     <identifier> main </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -21,19 +24,24 @@
       <varDec>
         <keyword> var </keyword>
         <identifier> SquareGame </identifier>
+True None None None
         <identifier> game </identifier>
+True var SquareGame 0
         <symbol> ; </symbol>
       </varDec>
       <statements>
         <letStatement>
           <keyword> let </keyword>
           <identifier> game </identifier>
+False var SquareGame 0
           <symbol> = </symbol>
           <expression>
             <term>
               <identifier> SquareGame </identifier>
+False None None None
               <symbol> . </symbol>
               <identifier> new </identifier>
+False None None None
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -45,8 +53,10 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> game </identifier>
+CLASS DETECTED
           <symbol> . </symbol>
           <identifier> run </identifier>
+SUBROUTINE DETECTED
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -56,8 +66,10 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> game </identifier>
+CLASS DETECTED
           <symbol> . </symbol>
           <identifier> dispose </identifier>
+SUBROUTINE DETECTED
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -76,6 +88,7 @@
     <keyword> function </keyword>
     <keyword> void </keyword>
     <identifier> test </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -86,20 +99,26 @@
         <keyword> var </keyword>
         <keyword> int </keyword>
         <identifier> i </identifier>
+True var int 0
         <symbol> , </symbol>
         <identifier> j </identifier>
+True var int 1
         <symbol> ; </symbol>
       </varDec>
       <varDec>
         <keyword> var </keyword>
         <identifier> String </identifier>
+True None None None
         <identifier> s </identifier>
+True var String 2
         <symbol> ; </symbol>
       </varDec>
       <varDec>
         <keyword> var </keyword>
         <identifier> Array </identifier>
+True None None None
         <identifier> a </identifier>
+True var Array 3
         <symbol> ; </symbol>
       </varDec>
       <statements>
@@ -117,6 +136,7 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> s </identifier>
+False var String 2
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -128,6 +148,7 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> s </identifier>
+False var String 2
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -139,6 +160,7 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> a </identifier>
+False var Array 3
               <symbol> [ </symbol>
               <expression>
                 <term>
@@ -150,6 +172,7 @@
               <expression>
                 <term>
                   <identifier> a </identifier>
+False var Array 3
                   <symbol> [ </symbol>
                   <expression>
                     <term>
@@ -169,10 +192,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> i </identifier>
+False var int 0
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> i </identifier>
+False var int 0
                 </term>
                 <symbol> * </symbol>
                 <term>
@@ -182,6 +207,7 @@
                       <symbol> - </symbol>
                       <term>
                         <identifier> j </identifier>
+False var int 1
                       </term>
                     </term>
                   </expression>
@@ -193,10 +219,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> j </identifier>
+False var int 1
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> j </identifier>
+False var int 1
                 </term>
                 <symbol> / </symbol>
                 <term>
@@ -217,14 +245,17 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> i </identifier>
+False var int 0
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> i </identifier>
+False var int 0
                 </term>
                 <symbol> | </symbol>
                 <term>
                   <identifier> j </identifier>
+False var int 1
                 </term>
               </expression>
               <symbol> ; </symbol>

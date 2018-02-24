@@ -1,35 +1,44 @@
 <class>
   <keyword> class </keyword>
   <identifier> Square </identifier>
+CLASS DETECTED
   <symbol> { </symbol>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
     <identifier> x </identifier>
+True field int 0
     <symbol> , </symbol>
     <identifier> y </identifier>
+True field int 1
     <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
     <identifier> size </identifier>
+True field int 2
     <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
     <keyword> constructor </keyword>
     <identifier> Square </identifier>
+CLASS DETECTED
     <identifier> new </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
       <keyword> int </keyword>
       <identifier> Ax </identifier>
+True arg int 0
       <symbol> , </symbol>
       <keyword> int </keyword>
       <identifier> Ay </identifier>
+True arg int 1
       <symbol> , </symbol>
       <keyword> int </keyword>
       <identifier> Asize </identifier>
+True arg int 2
     </parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
@@ -38,10 +47,12 @@
         <letStatement>
           <keyword> let </keyword>
           <identifier> x </identifier>
+False field int 0
           <symbol> = </symbol>
           <expression>
             <term>
               <identifier> Ax </identifier>
+False arg int 0
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -49,10 +60,12 @@
         <letStatement>
           <keyword> let </keyword>
           <identifier> y </identifier>
+False field int 1
           <symbol> = </symbol>
           <expression>
             <term>
               <identifier> Ay </identifier>
+False arg int 1
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -60,10 +73,12 @@
         <letStatement>
           <keyword> let </keyword>
           <identifier> size </identifier>
+False field int 2
           <symbol> = </symbol>
           <expression>
             <term>
               <identifier> Asize </identifier>
+False arg int 2
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -71,6 +86,7 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> draw </identifier>
+SUBROUTINE DETECTED
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -94,6 +110,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> dispose </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -104,8 +121,10 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Memory </identifier>
+CLASS DETECTED
           <symbol> . </symbol>
           <identifier> deAlloc </identifier>
+SUBROUTINE DETECTED
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -129,6 +148,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> draw </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -139,8 +159,10 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
+CLASS DETECTED
           <symbol> . </symbol>
           <identifier> setColor </identifier>
+SUBROUTINE DETECTED
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -155,39 +177,47 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
+CLASS DETECTED
           <symbol> . </symbol>
           <identifier> drawRectangle </identifier>
+SUBROUTINE DETECTED
           <symbol> ( </symbol>
           <expressionList>
             <expression>
               <term>
                 <identifier> x </identifier>
+False field int 0
               </term>
             </expression>
             <symbol> , </symbol>
             <expression>
               <term>
                 <identifier> y </identifier>
+False field int 1
               </term>
             </expression>
             <symbol> , </symbol>
             <expression>
               <term>
                 <identifier> x </identifier>
+False field int 0
               </term>
               <symbol> + </symbol>
               <term>
                 <identifier> size </identifier>
+False field int 2
               </term>
             </expression>
             <symbol> , </symbol>
             <expression>
               <term>
                 <identifier> y </identifier>
+False field int 1
               </term>
               <symbol> + </symbol>
               <term>
                 <identifier> size </identifier>
+False field int 2
               </term>
             </expression>
           </expressionList>
@@ -206,6 +236,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> erase </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -216,8 +247,10 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
+CLASS DETECTED
           <symbol> . </symbol>
           <identifier> setColor </identifier>
+SUBROUTINE DETECTED
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -232,39 +265,47 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
+CLASS DETECTED
           <symbol> . </symbol>
           <identifier> drawRectangle </identifier>
+SUBROUTINE DETECTED
           <symbol> ( </symbol>
           <expressionList>
             <expression>
               <term>
                 <identifier> x </identifier>
+False field int 0
               </term>
             </expression>
             <symbol> , </symbol>
             <expression>
               <term>
                 <identifier> y </identifier>
+False field int 1
               </term>
             </expression>
             <symbol> , </symbol>
             <expression>
               <term>
                 <identifier> x </identifier>
+False field int 0
               </term>
               <symbol> + </symbol>
               <term>
                 <identifier> size </identifier>
+False field int 2
               </term>
             </expression>
             <symbol> , </symbol>
             <expression>
               <term>
                 <identifier> y </identifier>
+False field int 1
               </term>
               <symbol> + </symbol>
               <term>
                 <identifier> size </identifier>
+False field int 2
               </term>
             </expression>
           </expressionList>
@@ -283,6 +324,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> incSize </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -302,10 +344,12 @@
                   <expression>
                     <term>
                       <identifier> y </identifier>
+False field int 1
                     </term>
                     <symbol> + </symbol>
                     <term>
                       <identifier> size </identifier>
+False field int 2
                     </term>
                   </expression>
                   <symbol> ) </symbol>
@@ -326,10 +370,12 @@
                   <expression>
                     <term>
                       <identifier> x </identifier>
+False field int 0
                     </term>
                     <symbol> + </symbol>
                     <term>
                       <identifier> size </identifier>
+False field int 2
                     </term>
                   </expression>
                   <symbol> ) </symbol>
@@ -348,6 +394,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> erase </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -357,10 +404,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> size </identifier>
+False field int 2
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> size </identifier>
+False field int 2
                 </term>
                 <symbol> + </symbol>
                 <term>
@@ -372,6 +421,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> draw </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -393,6 +443,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> decSize </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -406,6 +457,7 @@
           <expression>
             <term>
               <identifier> size </identifier>
+False field int 2
             </term>
             <symbol> &gt; </symbol>
             <term>
@@ -418,6 +470,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> erase </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -427,10 +480,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> size </identifier>
+False field int 2
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> size </identifier>
+False field int 2
                 </term>
                 <symbol> - </symbol>
                 <term>
@@ -442,6 +497,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> draw </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -463,6 +519,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveUp </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -476,6 +533,7 @@
           <expression>
             <term>
               <identifier> y </identifier>
+False field int 1
             </term>
             <symbol> &gt; </symbol>
             <term>
@@ -488,8 +546,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> setColor </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -504,13 +564,16 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                 </expression>
                 <symbol> , </symbol>
@@ -520,10 +583,12 @@
                     <expression>
                       <term>
                         <identifier> y </identifier>
+False field int 1
                       </term>
                       <symbol> + </symbol>
                       <term>
                         <identifier> size </identifier>
+False field int 2
                       </term>
                     </expression>
                     <symbol> ) </symbol>
@@ -537,20 +602,24 @@
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
               </expressionList>
@@ -560,10 +629,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> y </identifier>
+False field int 1
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> y </identifier>
+False field int 1
                 </term>
                 <symbol> - </symbol>
                 <term>
@@ -575,8 +646,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> setColor </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -591,35 +664,42 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -645,6 +725,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveDown </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -661,10 +742,12 @@
               <expression>
                 <term>
                   <identifier> y </identifier>
+False field int 1
                 </term>
                 <symbol> + </symbol>
                 <term>
                   <identifier> size </identifier>
+False field int 2
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -680,8 +763,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> setColor </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -696,35 +781,42 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -738,10 +830,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> y </identifier>
+False field int 1
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> y </identifier>
+False field int 1
                 </term>
                 <symbol> + </symbol>
                 <term>
@@ -753,8 +847,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> setColor </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -769,13 +865,16 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                 </expression>
                 <symbol> , </symbol>
@@ -785,10 +884,12 @@
                     <expression>
                       <term>
                         <identifier> y </identifier>
+False field int 1
                       </term>
                       <symbol> + </symbol>
                       <term>
                         <identifier> size </identifier>
+False field int 2
                       </term>
                     </expression>
                     <symbol> ) </symbol>
@@ -802,20 +903,24 @@
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
               </expressionList>
@@ -837,6 +942,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveLeft </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -850,6 +956,7 @@
           <expression>
             <term>
               <identifier> x </identifier>
+False field int 0
             </term>
             <symbol> &gt; </symbol>
             <term>
@@ -862,8 +969,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> setColor </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -878,8 +987,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -888,10 +999,12 @@
                     <expression>
                       <term>
                         <identifier> x </identifier>
+False field int 0
                       </term>
                       <symbol> + </symbol>
                       <term>
                         <identifier> size </identifier>
+False field int 2
                       </term>
                     </expression>
                     <symbol> ) </symbol>
@@ -905,26 +1018,31 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
               </expressionList>
@@ -934,10 +1052,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> x </identifier>
+False field int 0
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> x </identifier>
+False field int 0
                 </term>
                 <symbol> - </symbol>
                 <term>
@@ -949,8 +1069,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> setColor </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -965,25 +1087,30 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -994,10 +1121,12 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
               </expressionList>
@@ -1019,6 +1148,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveRight </identifier>
+SUBROUTINE DETECTED
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -1035,10 +1165,12 @@
               <expression>
                 <term>
                   <identifier> x </identifier>
+False field int 0
                 </term>
                 <symbol> + </symbol>
                 <term>
                   <identifier> size </identifier>
+False field int 2
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -1054,8 +1186,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> setColor </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -1070,25 +1204,30 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -1099,10 +1238,12 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
               </expressionList>
@@ -1112,10 +1253,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> x </identifier>
+False field int 0
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> x </identifier>
+False field int 0
                 </term>
                 <symbol> + </symbol>
                 <term>
@@ -1127,8 +1270,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> setColor </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -1143,8 +1288,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+CLASS DETECTED
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
+SUBROUTINE DETECTED
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -1153,10 +1300,12 @@
                     <expression>
                       <term>
                         <identifier> x </identifier>
+False field int 0
                       </term>
                       <symbol> + </symbol>
                       <term>
                         <identifier> size </identifier>
+False field int 2
                       </term>
                     </expression>
                     <symbol> ) </symbol>
@@ -1170,26 +1319,31 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> x </identifier>
+False field int 0
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
                 <symbol> , </symbol>
                 <expression>
                   <term>
                     <identifier> y </identifier>
+False field int 1
                   </term>
                   <symbol> + </symbol>
                   <term>
                     <identifier> size </identifier>
+False field int 2
                   </term>
                 </expression>
               </expressionList>
