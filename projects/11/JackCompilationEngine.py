@@ -41,32 +41,32 @@ class CompilationEngine(object):
 		return self.output
 
 	def _opening(self, tag, indent=0):
-		self.output += '  ' * indent + '<%s>\n' % tag
+		#self.output += '  ' * indent + '<%s>\n' % tag
 		self.current_scope = tag
 
 	def _closing(self, tag, indent=0):
-		self.output += '  ' * indent + '</%s>\n' % tag
+		pass#self.output += '  ' * indent + '</%s>\n' % tag
 
 	def _consume_token(self, expected=None, indent=0):
 		token_type, token_value = self.tokens[self.position]
 		self.position += 1
-		self.output += '  ' * indent + '<{0}> {1} </{0}>\n'.format(token_type, escape(token_value))
+		#self.output += '  ' * indent + '<{0}> {1} </{0}>\n'.format(token_type, escape(token_value))
 		if token_type == 'identifier':
 			if token_value == self.name:
-				self.output += 'CLASS DETECTED\n'
+				pass#self.output += 'CLASS DETECTED\n'
 			elif token_value in self.subroutines:
-				self.output += 'SUBROUTINE DETECTED\n'
+				pass#self.output += 'SUBROUTINE DETECTED\n'
 			elif self.current_scope == 'doStatement':
 				if self._get_current_token() == '.':
-					self.output += 'CLASS DETECTED\n'
+					pass#self.output += 'CLASS DETECTED\n'
 				else:
-					self.output += 'SUBROUTINE DETECTED\n'
+					pass#self.output += 'SUBROUTINE DETECTED\n'
 			else:
 				defined = self.current_scope in ['classVarDec', 'varDec', 'parameterList']
 				kind = self.var_symbol_table.kind_of(token_value)
 				type = self.var_symbol_table.type_of(token_value)
 				index = self.var_symbol_table.index_of(token_value)
-				self.output += '{0} {1} {2} {3}\n'.format(defined, kind, type, index)
+				pass#self.output += '{0} {1} {2} {3}\n'.format(defined, kind, type, index)
 		return (token_type, token_value)
 
 	def _set_class_name(self):
@@ -100,14 +100,16 @@ class CompilationEngine(object):
 	def _compile_subroutine_declaration(self):
 		self._opening('subroutineDec', 1)
 		self.var_symbol_table.enter_subroutine()
-		self._consume_token(indent=2)  # constructor, function, method
-		self._consume_token(indent=2)  # type, void
-		self._save_subroutine_name()
+		self.output += '%s ' % self._consume_token(indent=2)[1]  # constructor, function, method
+		self._consume_token(indent=2)[1]  # type, void
+		self.output += '{0}.{1} '.format(self.name, self._save_subroutine_name())
 
 		self._consume_token('(', indent=2)
 		self._opening('parameterList', 2)
 		if (self._get_current_token() != ')'):
 			self._compile_parameter_list()
+		else:
+			self.output += '0\n'
 		self._closing('parameterList', 2)
 		self._consume_token(')', indent=2)
 
@@ -125,8 +127,10 @@ class CompilationEngine(object):
 		self._closing('subroutineDec', 1)
 
 	def _save_subroutine_name(self):
-		self.subroutines.add(self._get_current_token())
+		subroutine_name = self._get_current_token()
+		self.subroutines.add(subroutine_name)
 		self._consume_token(indent=2)  # subroutine name
+		return subroutine_name
 
 	def _compile_parameter_list(self):
 		type = self._get_current_token()
@@ -135,8 +139,10 @@ class CompilationEngine(object):
 
 		self._consume_token(indent=3)  # type
 		self._consume_token(indent=3)  # parameter name
+		count = 1
 
 		while (self._get_current_token() == ','):
+			count += 1
 			self._consume_token(',', indent=3)
 			type = self._get_current_token()
 			identifier = self._get_current_token(1)
@@ -144,6 +150,8 @@ class CompilationEngine(object):
 
 			self._consume_token(indent=3)  # type
 			self._consume_token(indent=3)  # parameter name
+
+		self.output += '%s\n' % count
 
 	def _compile_var_declaration(self):
 		self._opening('varDec', 3)
@@ -262,6 +270,7 @@ class CompilationEngine(object):
 		self._closing('expressionList', indent)
 
 	def _compile_term(self, indent=0):
+		self.output += 'term\n'
 		self._opening('term', indent)
 		if (self._get_current_token() == '('):
 			self._consume_token('(', indent=indent+1)
