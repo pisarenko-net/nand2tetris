@@ -14,6 +14,24 @@ _STATEMENT_COMPILE_FUNCTIONS = {
 _OPERATORS = ['+', '-', '*', '/', '&', '|', '<', '>', '=']
 _UNARY_OPERATORS = ['-', '~']
 
+_OPERATOR_TRANSLATIONS = {
+	'+': 'add',
+	'*': 'call Math.multiply 2'
+}
+
+_UNARY_OPERATOR_TRANSLATIONS = {
+	'-': 'neg'
+}
+
+_KIND_TO_SEGMENT = {
+	'var': 'local'
+}
+
+_CONSTANTS = {
+	'true': '0',
+	'false': '-1'
+}
+
 class CompilationEngine(object):
 	def __init__(self, tokens):
 		self.tokens = list(tokens)
@@ -108,16 +126,16 @@ class CompilationEngine(object):
 		self._opening('parameterList', 2)
 		if (self._get_current_token() != ')'):
 			self._compile_parameter_list()
-		else:
-			self.output += '0\n'
 		self._closing('parameterList', 2)
 		self._consume_token(')', indent=2)
 
 		self._opening('subroutineBody', 2)
 		self._consume_token('{', indent=3)
 
+		count = 0
 		while (self._get_current_token() == 'var'):
-			self._compile_var_declaration()
+			count += self._compile_var_declaration()
+		self.output += '%s\n' % count
 
 		self._compile_statements(3)
 
@@ -139,10 +157,8 @@ class CompilationEngine(object):
 
 		self._consume_token(indent=3)  # type
 		self._consume_token(indent=3)  # parameter name
-		count = 1
 
 		while (self._get_current_token() == ','):
-			count += 1
 			self._consume_token(',', indent=3)
 			type = self._get_current_token()
 			identifier = self._get_current_token(1)
@@ -150,8 +166,6 @@ class CompilationEngine(object):
 
 			self._consume_token(indent=3)  # type
 			self._consume_token(indent=3)  # parameter name
-
-		self.output += '%s\n' % count
 
 	def _compile_var_declaration(self):
 		self._opening('varDec', 3)
@@ -164,14 +178,18 @@ class CompilationEngine(object):
 		self._consume_token(indent=4)  # type
 		self._consume_token(indent=4)  # name
 
+		count = 1
+
 		while (self._get_current_token() == ','):
 			self._consume_token(',', indent=4)
 			identifier = self._get_current_token()
 			self.var_symbol_table.define(kind, type, identifier)
 			self._consume_token(indent=4)  # name
+			count += 1
 
 		self._consume_token(';', indent=4)
 		self._closing('varDec', 3)
+		return count
 
 	def _compile_statements(self, indent=0):
 		self._opening('statements', indent)
@@ -215,12 +233,16 @@ class CompilationEngine(object):
 		self._consume_token('return', indent=indent+1)
 		if (self._get_current_token() != ';'):
 			self._compile_expression(indent+1)
+		else:
+			self.output += 'push constant 0\n'
 		self._consume_token(';', indent=indent+1)
+		self.output += 'return\n'
 		self._closing('returnStatement', indent)
 
 	def _compile_let_statement(self, indent=0):
 		self._opening('letStatement', indent)
 		self._consume_token('let', indent=indent+1)
+		variable_name = self._get_current_token()
 		self._consume_token(indent=indent+1)  # variable name
 
 		if (self._get_current_token() == '['):
@@ -231,6 +253,12 @@ class CompilationEngine(object):
 		self._consume_token('=', indent=indent+1)
 		self._compile_expression(indent+1)
 		self._consume_token(';', indent=indent+1)
+
+		kind = self.var_symbol_table.kind_of(variable_name)
+		segment = _KIND_TO_SEGMENT.get(kind, 'UNKNOWN_SEGMENT')
+		index = self.var_symbol_table.index_of(variable_name)
+		self.output += 'pop {0} {1}\n'.format(segment, index)
+
 		self._closing('letStatement', indent)
 
 	def _compile_do_statement(self, indent=0):
@@ -238,39 +266,52 @@ class CompilationEngine(object):
 		self._consume_token('do', indent=indent+1)
 		self._compile_subroutine_call(indent+1)
 		self._consume_token(';', indent=indent+1)
+		self.output += 'pop temp 0\n'
 		self._closing('doStatement', indent)
 
 	def _compile_subroutine_call(self, indent=0):
 		if (self._get_current_token(1) == '('):
+			class_name = self.name
+			subroutine_name = self._get_current_token()
 			self._consume_token(indent=indent)  # subroutine name
 		else:
+			class_name = self._get_current_token()
 			self._consume_token(indent=indent)  # class name or var name
 			self._consume_token('.', indent=indent)
+			subroutine_name = self._get_current_token()
 			self._consume_token(indent=indent)  # subroutine name
 
 		self._consume_token('(', indent=indent)
-		self._compile_expression_list(indent)
+		param_count = self._compile_expression_list(indent)
 		self._consume_token(')', indent=indent)
+
+		self.output += 'call {0}.{1} {2}\n'.format(class_name, subroutine_name, param_count)
 
 	def _compile_expression(self, indent=0):
 		self._opening('expression', indent)
 		self._compile_term(indent+1)
 		while (self._get_current_token() in _OPERATORS):
+			operator = self._get_current_token()
 			self._consume_token(indent=indent+1)  # operator
 			self._compile_term(indent+1)
+			self.output += '%s\n' % _OPERATOR_TRANSLATIONS.get(operator, 'NOOOOOOP')
 		self._closing('expression', indent)
 
 	def _compile_expression_list(self, indent=0):
 		self._opening('expressionList', indent)
+		count = 0
 		if (self._get_current_token() != ')'):
+			count = 1
 			self._compile_expression(indent+1)
 			while (self._get_current_token() == ','):
+				count += 1
 				self._consume_token(',', indent=indent+1)
 				self._compile_expression(indent+1)
+
 		self._closing('expressionList', indent)
+		return count
 
 	def _compile_term(self, indent=0):
-		self.output += 'term\n'
 		self._opening('term', indent)
 		if (self._get_current_token() == '('):
 			self._consume_token('(', indent=indent+1)
@@ -282,12 +323,24 @@ class CompilationEngine(object):
 			self._compile_expression(indent+1)
 			self._consume_token(']', indent=indent+1)
 		elif (self._get_current_token() in _UNARY_OPERATORS):
+			operator = self._get_current_token()
 			self._consume_token(indent=indent+1)  # unary operator
 			self._compile_term(indent+1)
+			self.output += '%s\n' % _UNARY_OPERATOR_TRANSLATIONS.get(operator, 'NOOOOOOP')
 		elif (self._get_current_token(1) == '(' or self._get_current_token(1) == '.'):
 			self._compile_subroutine_call(indent+1)
 		else:
+			value = self._get_current_token()
 			self._consume_token(indent=indent+1)  # constants or var name
+			if not self.var_symbol_table.kind_of(value):
+				if value in _CONSTANTS:
+					value = _CONSTANTS[value]
+				self.output += 'push constant {0}\n'.format(value)
+			else:
+				kind = self.var_symbol_table.kind_of(value)
+				segment = _KIND_TO_SEGMENT.get(kind, 'UNKNOWN_SEGMENT')
+				index = self.var_symbol_table.index_of(value)
+				self.output += 'push {0} {1}\n'.format(segment, index)
 		self._closing('term', indent)
 
 def _invoke_method(self, name, argument):
