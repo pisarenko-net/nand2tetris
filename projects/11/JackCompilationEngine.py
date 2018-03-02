@@ -16,15 +16,26 @@ _UNARY_OPERATORS = ['-', '~']
 
 _OPERATOR_TRANSLATIONS = {
 	'+': 'add',
-	'*': 'call Math.multiply 2'
+	'*': 'call Math.multiply 2',
+	'/': 'call Math.divide 2',
+	'>': 'gt',
+	'<': 'lt',
+	'&': 'and',
+	'|': 'or',
+	'=': 'eq',
+	'-': 'sub'
 }
 
 _UNARY_OPERATOR_TRANSLATIONS = {
-	'-': 'neg'
+	'-': 'neg',
+	'~': 'not'
 }
 
 _KIND_TO_SEGMENT = {
-	'var': 'local'
+	'var': 'local',
+	'arg': 'argument',
+	'field': 'this',
+	'static': 'static'
 }
 
 _CONSTANTS = {
@@ -117,8 +128,17 @@ class CompilationEngine(object):
 
 	def _compile_subroutine_declaration(self):
 		self._opening('subroutineDec', 1)
+		self.if_label_counter = 0
+		self.while_label_counter = 0
 		self.var_symbol_table.enter_subroutine()
-		self.output += '%s ' % self._consume_token(indent=2)[1]  # constructor, function, method
+
+		subroutine_type = self._get_current_token()
+		self.output += 'function '
+
+		if subroutine_type == 'method':
+			self.var_symbol_table.define('arg', 'none', 0)
+
+		self._consume_token(indent=2)  # constructor, function, method
 		self._consume_token(indent=2)[1]  # type, void
 		self.output += '{0}.{1} '.format(self.name, self._save_subroutine_name())
 
@@ -136,6 +156,14 @@ class CompilationEngine(object):
 		while (self._get_current_token() == 'var'):
 			count += self._compile_var_declaration()
 		self.output += '%s\n' % count
+
+		if subroutine_type == 'constructor':
+			self.output += 'push constant %s\n' % self.var_symbol_table.count('field')
+			self.output += 'call Memory.alloc 1\n'
+		elif subroutine_type == 'method':
+			self.output += 'push argument 0\n'
+		if subroutine_type in ['constructor', 'method']:
+			self.output += 'pop pointer 0\n'
 
 		self._compile_statements(3)
 
@@ -199,33 +227,55 @@ class CompilationEngine(object):
 		self._closing('statements', indent)
 
 	def _compile_while_statement(self, indent=0):
+		while_index = self.while_label_counter
+		self.while_label_counter += 1
+
 		self._opening('whileStatement', indent)
+		self.output += 'label WHILE_EXP%s\n' % (while_index)
 		self._consume_token('while', indent=indent+1)
 		self._consume_token('(', indent=indent+1)
 		self._compile_expression(indent+1)
+		self.output += 'not\n'
+		self.output += 'if-goto WHILE_END%s\n' % (while_index)
 		self._consume_token(')', indent=indent+1)
 
 		self._consume_token('{', indent=indent+1)
 		self._compile_statements(indent+1)
+		self.output += 'goto WHILE_EXP%s\n' % (while_index)
+		self.output += 'label WHILE_END%s\n' % (while_index)
 		self._consume_token('}', indent=indent+1)
 		self._closing('whileStatement', indent)
 
 	def _compile_if_statement(self, indent=0):
+		if_index = self.if_label_counter
+		self.if_label_counter += 1
+
 		self._opening('ifStatement', indent)
 		self._consume_token('if', indent=indent+1)
 		self._consume_token('(', indent=indent+1)
 		self._compile_expression(indent+1)
+		self.output += 'if-goto IF_TRUE%s\n' % (if_index)
+		self.output += 'goto IF_FALSE%s\n' % (if_index)
+		self.output += 'label IF_TRUE%s\n' % (if_index)
 		self._consume_token(')', indent=indent+1)
 
 		self._consume_token('{', indent=indent+1)
 		self._compile_statements(indent+1)
 		self._consume_token('}', indent=indent+1)
 
-		if (self._get_current_token() == 'else'):
+		has_else_clause = self._get_current_token() == 'else'
+
+		if has_else_clause:
+			self.output += 'goto IF_END%s\n' % (if_index)
+
+		self.output += 'label IF_FALSE%s\n' % (if_index)
+		if (has_else_clause):
 			self._consume_token('else', indent=indent+1)
 			self._consume_token('{', indent=indent+1)
 			self._compile_statements(indent+1)
 			self._consume_token('}', indent=indent+1)
+			self.output += 'label IF_END%s\n' % (if_index)
+			
 		self._closing('ifStatement', indent)
 
 	def _compile_return_statement(self, indent=0):
@@ -241,23 +291,35 @@ class CompilationEngine(object):
 
 	def _compile_let_statement(self, indent=0):
 		self._opening('letStatement', indent)
+		is_array = False
+
 		self._consume_token('let', indent=indent+1)
 		variable_name = self._get_current_token()
 		self._consume_token(indent=indent+1)  # variable name
 
+		kind = self.var_symbol_table.kind_of(variable_name)
+		segment = _KIND_TO_SEGMENT.get(kind, 'UNKNOWN_SEGMENT')
+		index = self.var_symbol_table.index_of(variable_name)
+
 		if (self._get_current_token() == '['):
+			is_array = True
 			self._consume_token('[', indent=indent+1)
 			self._compile_expression(indent+1)
+			self.output += 'push {0} {1}\n'.format(segment, index)
+			self.output += 'add\n'
 			self._consume_token(']', indent=indent+1)
 
 		self._consume_token('=', indent=indent+1)
 		self._compile_expression(indent+1)
 		self._consume_token(';', indent=indent+1)
 
-		kind = self.var_symbol_table.kind_of(variable_name)
-		segment = _KIND_TO_SEGMENT.get(kind, 'UNKNOWN_SEGMENT')
-		index = self.var_symbol_table.index_of(variable_name)
-		self.output += 'pop {0} {1}\n'.format(segment, index)
+		if is_array:
+			self.output += 'pop temp 0\n'
+			self.output += 'pop pointer 1\n'
+			self.output += 'push temp 0\n'
+			self.output += 'pop that 0\n'
+		else:
+			self.output += 'pop {0} {1}\n'.format(segment, index)
 
 		self._closing('letStatement', indent)
 
@@ -271,21 +333,34 @@ class CompilationEngine(object):
 
 	def _compile_subroutine_call(self, indent=0):
 		if (self._get_current_token(1) == '('):
-			class_name = self.name
+			callee = None
 			subroutine_name = self._get_current_token()
 			self._consume_token(indent=indent)  # subroutine name
 		else:
-			class_name = self._get_current_token()
+			callee = self._get_current_token()
 			self._consume_token(indent=indent)  # class name or var name
 			self._consume_token('.', indent=indent)
 			subroutine_name = self._get_current_token()
 			self._consume_token(indent=indent)  # subroutine name
 
+		if not callee:
+			self.output += 'push pointer 0\n'
+		elif self.var_symbol_table.kind_of(callee):
+			index = self.var_symbol_table.index_of(callee)
+			segment = _KIND_TO_SEGMENT[self.var_symbol_table.kind_of(callee)]
+			self.output += 'push {0} {1}\n'.format(segment, index)
+
 		self._consume_token('(', indent=indent)
 		param_count = self._compile_expression_list(indent)
 		self._consume_token(')', indent=indent)
 
-		self.output += 'call {0}.{1} {2}\n'.format(class_name, subroutine_name, param_count)
+		if self.var_symbol_table.kind_of(callee):
+			type = self.var_symbol_table.type_of(callee)
+			self.output += 'call {0}.{1} {2}\n'.format(type, subroutine_name, param_count+1)
+		elif not callee:
+			self.output += 'call {0}.{1} {2}\n'.format(self.name, subroutine_name, param_count+1)
+		else:
+			self.output += 'call {0}.{1} {2}\n'.format(callee, subroutine_name, param_count)
 
 	def _compile_expression(self, indent=0):
 		self._opening('expression', indent)
@@ -318,9 +393,17 @@ class CompilationEngine(object):
 			self._compile_expression(indent+1)
 			self._consume_token(')', indent=indent+1)
 		elif (self._get_current_token(1) == '['):
+			variable_name = self._get_current_token()
 			self._consume_token(indent=indent+1)  # variable name
 			self._consume_token('[', indent=indent+1)
 			self._compile_expression(indent+1)
+			kind = self.var_symbol_table.kind_of(variable_name)
+			segment = _KIND_TO_SEGMENT.get(kind, 'UNKNOWN_SEGMENT')
+			index = self.var_symbol_table.index_of(variable_name)
+			self.output += 'push {0} {1}\n'.format(segment, index)
+			self.output += 'add\n'
+			self.output += 'pop pointer 1\n'
+			self.output += 'push that 0\n'
 			self._consume_token(']', indent=indent+1)
 		elif (self._get_current_token() in _UNARY_OPERATORS):
 			operator = self._get_current_token()
@@ -330,12 +413,22 @@ class CompilationEngine(object):
 		elif (self._get_current_token(1) == '(' or self._get_current_token(1) == '.'):
 			self._compile_subroutine_call(indent+1)
 		else:
-			value = self._get_current_token()
-			self._consume_token(indent=indent+1)  # constants or var name
+			token_type, value = self._consume_token(indent=indent+1)  # constants or var name
 			if not self.var_symbol_table.kind_of(value):
-				if value in _CONSTANTS:
-					value = _CONSTANTS[value]
-				self.output += 'push constant {0}\n'.format(value)
+				if value == 'this':
+					self.output += 'push pointer 0\n'
+				elif value == 'true' or value == 'false' or value == 'null':
+					self.output += 'push constant 0\n'
+					if value == 'true':
+						self.output += 'not\n'
+				elif token_type == 'stringConstant':
+					self.output += 'push constant %s\n' % len(value)
+					self.output += 'call String.new 1\n'
+					for char in value:
+						self.output += 'push constant %s\n' % ord(char)
+						self.output += 'call String.appendChar 2\n'
+				else:
+					self.output += 'push constant {0}\n'.format(value)
 			else:
 				kind = self.var_symbol_table.kind_of(value)
 				segment = _KIND_TO_SEGMENT.get(kind, 'UNKNOWN_SEGMENT')

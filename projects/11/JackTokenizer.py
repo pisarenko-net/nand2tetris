@@ -12,7 +12,7 @@ IGNORED_EXPRESSIONS = [
 KEYWORDS = ['class', 'constructor', 'function', 'method', 'field', 'static', 'var',
 	        'int', 'char', 'boolean', 'void', 'true', 'false', 'null', 'this', 'let',
 	        'do', 'if', 'else', 'while', 'return']
-KEYWORD_EXPRESSIONS = [('keyword', re.compile('(%s)' % keyword)) for keyword in KEYWORDS]
+KEYWORD_EXPRESSIONS = [('keyword', re.compile('(%s)\s' % keyword)) for keyword in KEYWORDS]
 
 SYMBOLS_EXPRESSION = ('symbol', re.compile(r'([\{\}\(\)\[\]\.,;\+\-\*/&\|<>=_~])'))
 INT_CONST_EXPRESSION = ('integerConstant', re.compile(r'(\d+)'))
